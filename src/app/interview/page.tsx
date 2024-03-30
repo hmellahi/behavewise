@@ -693,7 +693,7 @@ export default function DemoPage() {
                 </motion.div>
                 <div className="flex flex-row space-x-4 mt-8 justify-end">
                   <button
-                    onClick={() => setStep(1)}
+                    // onClick={() => setStep(1)}
                     className="group max-w-[200px] rounded-full px-4 py-2 text-[13px] font-semibold transition-all flex items-center justify-center bg-[#f5f7f9] text-[#1E2B3A] no-underline active:scale-95 scale-100 duration-75"
                     style={{
                       boxShadow: "0 1px 1px #0c192714, 0 1px 3px #0c192724",
