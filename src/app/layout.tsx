@@ -1,4 +1,4 @@
-import "../styles/globals.css";
+import "./styles/globals.css";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -33,7 +33,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className="scroll-smooth antialiased [font-feature-settings:'ss01']">
-        {children}
+        {children} 
       </body>
     </html>
   );
