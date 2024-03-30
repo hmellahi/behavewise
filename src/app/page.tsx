@@ -1,9 +1,10 @@
 "use client";
 
-import { gradient } from "@/components/Gradient";
+import { gradient } from "@/components/ui/Gradient";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { useEffect } from "react";
+// import First from '@/../public/svgs/First.svg'
 
 export default function Home() {
   useEffect(() => {
@@ -285,7 +286,8 @@ export default function Home() {
               </clipPath>
             </defs>
           </svg>
-          <First className="w-[70px] text-white opacity-80 mt-[6px]" />
+          {/* // TODO uncomment thi */}
+          {/* <First className="w-[70px] text-white opacity-80 mt-[6px]" /> */}
           <svg
             className="w-[80px] text-white opacity-80 hidden md:block"
             viewBox="0 0 55 15"
