@@ -1,11 +1,14 @@
 "use client";
+import Spinner from "@/components/svgs/Spinner";
+import { ffmpeg } from "@/plugins/ffmpeg";
 import { fetchFile } from "@ffmpeg/ffmpeg";
+import Lock from "@public/svgs/Lock.svg";
 import { AnimatePresence, motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Webcam from "react-webcam";
 import { v4 as uuid } from "uuid";
-import { ffmpeg } from "@/plugins/ffmpeg";
 
 const questions = [
   {
@@ -200,6 +203,22 @@ export default function DemoPage() {
         }
       );
       const results = await upload.json();
+      // const results = {
+      //   error: "HEll",
+      //   transcript: `Firstly, I'd like to thank you for considering me for this interview.
+      
+      // I started learning to code back in 2019 when I was in high school. Following that, I pursued my education at 1337, which is a one-of-a-kind software engineering school. Unlike traditional schools, 1337 follows a peer learning approach, meaning we didn't have teachers. Instead, we taught each other to complete different school projects.
+              
+      // After graduating, I joined Leyton as an intern. After completing my internship, I received an offer as a Full Stack Engineer. I was then promoted to an intermediate position within just one year.
+              
+      // During my spare time, I was part of the founding team of fileqa, a platform that instantly provides users with insights from documents.
+              
+      // Looking ahead, I am excited about expanding my skills and contributing to innovative and more challenging projects.`,
+      // };
+
+      // const upload = {
+      //   ok: true,
+      // };
 
       if (upload.ok) {
         setIsSuccess(true);
@@ -326,20 +345,12 @@ export default function DemoPage() {
               className="flex flex-col md:flex-row items-center mt-2 md:mt-4 md:justify-between space-y-1 md:space-y-0"
             >
               <div className="flex flex-row items-center space-x-1">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={2}
-                  stroke="currentColor"
-                  className="w-4 h-4 text-[#407BBF] shrink-0"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
-                  />
-                </svg>
+                <Image
+                  alt="lock"
+                  src={Lock}
+                  className="text-[14px] font-normal leading-[20px] text-[#1a2b3b]"
+                />
+                {/* <Lock className="w-4 h-4 text-[#407BBF] shrink-0" /> */}
                 <p className="text-[14px] font-normal leading-[20px] text-[#1a2b3b]">
                   Video is not stored on our servers, and will go away as soon
                   as you leave the page.
@@ -415,15 +426,6 @@ export default function DemoPage() {
           <div className="h-full w-full items-center flex flex-col mt-[10vh]">
             {recordingPermission ? (
               <div className="w-full flex flex-col max-w-[1080px] mx-auto justify-center">
-                <h2 className="text-2xl font-semibold text-left text-[#1D2B3A] mb-2">
-                  {selected.name === "Behavioral"
-                    ? `Tell me about yourself. Why don${`’`}t you walk me through your resume?`
-                    : selectedInterviewer.name === "John"
-                    ? "What is a Hash Table, and what is the average case and worst case time for each of its operations?"
-                    : selectedInterviewer.name === "Richard"
-                    ? "Uber is looking to expand its product line. Talk me through how you would approach this problem."
-                    : "You have a 3-gallon jug and 5-gallon jug, how do you measure out exactly 4 gallons?"}
-                </h2>
                 <span className="text-[14px] leading-[20px] text-[#1a2b3b] font-normal mb-4">
                   Asked by top companies like Google, Facebook and more
                 </span>
@@ -438,26 +440,7 @@ export default function DemoPage() {
                 >
                   {!cameraLoaded && (
                     <div className="text-white absolute top-1/2 left-1/2 z-20 flex items-center">
-                      <svg
-                        className="animate-spin h-4 w-4 text-white mx-auto my-0.5"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <circle
-                          className="opacity-25"
-                          cx="12"
-                          cy="12"
-                          r="10"
-                          stroke="currentColor"
-                          strokeWidth={3}
-                        ></circle>
-                        <path
-                          className="opacity-75"
-                          fill="currentColor"
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                        ></path>
-                      </svg>
+                      <Spinner className="animate-spin h-4 w-4 text-white mx-auto my-0.5" />
                     </div>
                   )}
                   <div className="relative z-10 h-full w-full rounded-lg">

@@ -13,6 +13,8 @@ const handler = async (req: Request): Promise<Response> => {
     prompt?: string;
   };
 
+  console.log(prompt)
+
   if (!prompt) {
     return new Response("No prompt in the request", { status: 400 });
   }
