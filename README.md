@@ -8,10 +8,10 @@
 </p>
 
 <p align="center">
-  <a href="https://twitter.com/tmeyer_me">
+  <a href="https://twitter.com/hamzaMellahi">
     <img src="https://img.shields.io/twitter/follow/tmeyer_me?style=flat&label=Follow&logo=twitter&color=0bf&logoColor=fff" alt="Tyler Meyer's follower count" />
   </a>
-  <a href="https://github.com/Tameyer41/liftoff">
+  <a href="https://github.com/hmellahi/mockinterview-ai">
     <img src="https://img.shields.io/github/stars/Tameyer41/liftoff?label=Tameyer41%2Fliftoff" alt="Liftoff repo star count" />
   </a>
 </p>
@@ -37,7 +37,7 @@ You can deploy this template to Vercel with the button below:
 You can also clone & create this repo locally with the following command:
 
 ```bash
-npx create-next-app liftoff --example "https://github.com/Tameyer41/liftoff"
+npx create-next-app liftoff --example "https://github.com/hmellahi/mockinterview-ai"
 ```
 
 ## Tech Stack + Features
