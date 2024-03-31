@@ -10,8 +10,12 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Webcam from "react-webcam";
 import { v4 as uuid } from "uuid";
+import LoadingState from "./components/LoadingState";
 import NoCameraAccess from "./components/NoCameraAccess";
 import VideoNotStoredDisclaimer from "./components/VideoNotStoredDisclaimer";
+import RestartButton from "./components/ui/RestartButton";
+import StartTimerButton from "./components/ui/StartTimerButton";
+import StopTimerButton from "./components/ui/StopTimerButton";
 
 export default function DemoPage() {
   const [selected, setSelected] = useState(questions[0]);
@@ -331,15 +335,7 @@ export default function DemoPage() {
                     className="absolute z-10 min-h-[100%] min-w-[100%] h-auto w-auto object-cover"
                   />
                 </div>
-                {loading && (
-                  <div className="absolute flex h-full w-full items-center justify-center">
-                    <div className="relative h-[112px] w-[112px] rounded-lg object-cover text-[2rem]">
-                      <div className="flex h-[112px] w-[112px] items-center justify-center rounded-[0.5rem] bg-[#4171d8] !text-white">
-                        Loading...
-                      </div>
-                    </div>
-                  </div>
-                )}
+                {loading && <LoadingState />}
 
                 {cameraLoaded && (
                   <div className="absolute bottom-0 left-0 z-50 flex h-[82px] w-full items-center justify-center">
@@ -350,12 +346,9 @@ export default function DemoPage() {
                         ) : (
                           <div className="flex flex-row gap-2">
                             {!isSubmitting && (
-                              <button
-                                onClick={() => restartVideo()}
-                                className="group rounded-full px-4 py-2 text-[13px] font-semibold transition-all flex items-center justify-center bg-white text-[#1E2B3A] hover:[linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), #0D2247] no-underline flex gap-x-2  active:scale-95 scale-100 duration-75"
-                              >
-                                Restart
-                              </button>
+                              <RestartButton
+                                onClick={restartVideo}
+                              ></RestartButton>
                             )}
                             <button
                               onClick={handleDownload}
@@ -387,19 +380,13 @@ export default function DemoPage() {
                       <div className="absolute bottom-[6px] md:bottom-5 left-5 right-5">
                         <div className="lg:mt-4 flex flex-col items-center justify-center gap-2">
                           {capturing ? (
-                            <div
-                              id="stopTimer"
-                              onClick={handleStopCaptureClick}
-                              className="flex h-10 w-10 flex-col items-center justify-center rounded-full bg-transparent text-white hover:shadow-xl ring-4 ring-white  active:scale-95 scale-100 duration-75 cursor-pointer"
-                            >
-                              <div className="h-5 w-5 rounded bg-red-500 cursor-pointer"></div>
-                            </div>
+                            <StopTimerButton
+                              handleStopCaptureClick={handleStopCaptureClick}
+                            />
                           ) : (
-                            <button
-                              id="startTimer"
-                              onClick={handleStartCaptureClick}
-                              className="flex h-8 w-8 sm:h-8 sm:w-8 flex-col items-center justify-center rounded-full bg-red-500 text-white hover:shadow-xl ring-4 ring-white ring-offset-gray-500 ring-offset-2 active:scale-95 scale-100 duration-75"
-                            ></button>
+                            <StartTimerButton
+                              handleStartCaptureClick={handleStartCaptureClick}
+                            />
                           )}
                           <div className="w-12"></div>
                         </div>
