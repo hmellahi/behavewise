@@ -1,6 +1,6 @@
 import "@/styles/globals.css";
+import { Analytics } from "@vercel/analytics/react";
 import { Metadata } from "next";
-import { Analytics } from "@vercel/analytics/react"
 
 export const metadata: Metadata = {
   title: "Liftoff - AI-Powered Mock Interviews",
@@ -35,7 +35,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className="scroll-smooth antialiased [font-feature-settings:'ss01']">
         {children}
-        <Analytics/>
+        <Analytics />
       </body>
     </html>
   );

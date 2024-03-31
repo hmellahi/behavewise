@@ -206,13 +206,13 @@ export default function DemoPage() {
       // const results = {
       //   error: "HEll",
       //   transcript: `Firstly, I'd like to thank you for considering me for this interview.
-      
+
       // I started learning to code back in 2019 when I was in high school. Following that, I pursued my education at 1337, which is a one-of-a-kind software engineering school. Unlike traditional schools, 1337 follows a peer learning approach, meaning we didn't have teachers. Instead, we taught each other to complete different school projects.
-              
+
       // After graduating, I joined Leyton as an intern. After completing my internship, I received an offer as a Full Stack Engineer. I was then promoted to an intermediate position within just one year.
-              
+
       // During my spare time, I was part of the founding team of fileqa, a platform that instantly provides users with insights from documents.
-              
+
       // Looking ahead, I am excited about expanding my skills and contributing to innovative and more challenging projects.`,
       // };
 
@@ -462,23 +462,7 @@ export default function DemoPage() {
                             crossOrigin="anonymous"
                           >
                             <source
-                              src={
-                                selectedInterviewer.name === "John"
-                                  ? selected.name === "Behavioral"
-                                    ? "https://liftoff-public.s3.amazonaws.com/DemoInterviewMale.mp4"
-                                    : "https://liftoff-public.s3.amazonaws.com/JohnTechnical.mp4"
-                                  : selectedInterviewer.name === "Richard"
-                                  ? selected.name === "Behavioral"
-                                    ? "https://liftoff-public.s3.amazonaws.com/RichardBehavioral.mp4"
-                                    : "https://liftoff-public.s3.amazonaws.com/RichardTechnical.mp4"
-                                  : selectedInterviewer.name === "Sarah"
-                                  ? selected.name === "Behavioral"
-                                    ? "https://liftoff-public.s3.amazonaws.com/BehavioralSarah.mp4"
-                                    : "https://liftoff-public.s3.amazonaws.com/SarahTechnical.mp4"
-                                  : selected.name === "Behavioral"
-                                  ? "https://liftoff-public.s3.amazonaws.com/DemoInterviewMale.mp4"
-                                  : "https://liftoff-public.s3.amazonaws.com/JohnTechnical.mp4"
-                              }
+                              src="https://liftoff-public.s3.amazonaws.com/DemoInterviewMale.mp4"
                               type="video/mp4"
                             />
                           </video>
