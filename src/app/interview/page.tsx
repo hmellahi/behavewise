@@ -1,14 +1,17 @@
 "use client";
+import SuccessButton from "@/components/common/SuccessButton";
+import { RightArrow } from "@/components/svgs";
 import Spinner from "@/components/svgs/Spinner";
 import interviewers from "@/constants/interviewers";
 import questions from "@/constants/questions";
 import { ffmpeg } from "@/plugins/ffmpeg";
 import { fetchFile } from "@ffmpeg/ffmpeg";
 import { AnimatePresence, motion } from "framer-motion";
-import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Webcam from "react-webcam";
 import { v4 as uuid } from "uuid";
+import NoCameraAccess from "./components/NoCameraAccess";
+import VideoNotStoredDisclaimer from "./components/VideoNotStoredDisclaimer";
 
 export default function DemoPage() {
   const [selected, setSelected] = useState(questions[0]);
@@ -149,14 +152,7 @@ export default function DemoPage() {
       formData.append("model", "whisper-1");
 
       const question =
-        selected.name === "Behavioral"
-          ? `Tell me about yourself. Why don${`’`}t you walk me through your resume?`
-          : selectedInterviewer.name === "John"
-          ? "What is a Hash Table, and what is the average case and worst case time for each of its operations?"
-          : selectedInterviewer.name === "Richard"
-          ? "Uber is looking to expand its product line. Talk me through how you would approach this problem."
-          : "You have a 3-gallon jug and 5-gallon jug, how do you measure out exactly 4 gallons?";
-
+        "Tell me about yourself. Why don${`’`}t you walk me through your resume?";
       setStatus("Transcribing");
 
       const upload = await fetch(
@@ -350,31 +346,7 @@ export default function DemoPage() {
                     {recordedChunks.length > 0 ? (
                       <>
                         {isSuccess ? (
-                          <button
-                            className="cursor-disabled group rounded-full min-w-[140px] px-4 py-2 text-[13px] font-semibold group inline-flex items-center justify-center text-sm text-white duration-150 bg-green-500 hover:bg-green-600 hover:text-slate-100 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 active:scale-100 active:bg-green-800 active:text-green-100"
-                            style={{
-                              boxShadow:
-                                "0px 1px 4px rgba(27, 71, 13, 0.17), inset 0px 0px 0px 1px #5fc767, inset 0px 0px 0px 2px rgba(255, 255, 255, 0.1)",
-                            }}
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              className="h-5 w-5 mx-auto"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                              strokeWidth={2}
-                            >
-                              <motion.path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                                initial={{ pathLength: 0 }}
-                                animate={{ pathLength: 1 }}
-                                transition={{ duration: 0.5 }}
-                              />
-                            </svg>
-                          </button>
+                          <SuccessButton />
                         ) : (
                           <div className="flex flex-row gap-2">
                             {!isSubmitting && (
@@ -397,52 +369,13 @@ export default function DemoPage() {
                               <span>
                                 {isSubmitting ? (
                                   <div className="flex items-center justify-center gap-x-2">
-                                    <svg
-                                      className="animate-spin h-5 w-5 text-slate-50 mx-auto"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      fill="none"
-                                      viewBox="0 0 24 24"
-                                    >
-                                      <circle
-                                        className="opacity-25"
-                                        cx="12"
-                                        cy="12"
-                                        r="10"
-                                        stroke="currentColor"
-                                        strokeWidth={3}
-                                      ></circle>
-                                      <path
-                                        className="opacity-75"
-                                        fill="currentColor"
-                                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                      ></path>
-                                    </svg>
+                                    <Spinner className="animate-spin h-5 w-5 text-slate-50 mx-auto" />
                                     <span>{status}</span>
                                   </div>
                                 ) : (
                                   <div className="flex items-center justify-center gap-x-2">
                                     <span>Process transcript</span>
-                                    <svg
-                                      className="w-5 h-5"
-                                      viewBox="0 0 24 24"
-                                      fill="none"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path
-                                        d="M13.75 6.75L19.25 12L13.75 17.25"
-                                        stroke="white"
-                                        strokeWidth="1.5"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                      />
-                                      <path
-                                        d="M19 12H4.75"
-                                        stroke="white"
-                                        strokeWidth="1.5"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                      />
-                                    </svg>
+                                    <RightArrow className="w-5 h-5" />
                                   </div>
                                 )}
                               </span>
@@ -479,100 +412,10 @@ export default function DemoPage() {
                   id="countdown"
                 ></div>
               </motion.div>
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  delay: 0.5,
-                  duration: 0.15,
-                  ease: [0.23, 1, 0.82, 1],
-                }}
-                className="flex flex-row space-x-1 mt-4 items-center"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={2}
-                  stroke="currentColor"
-                  className="w-4 h-4 text-[#407BBF]"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
-                  />
-                </svg>
-                <p className="text-[14px] font-normal leading-[20px] text-[#1a2b3b]">
-                  Video is not stored on our servers, it is solely used for
-                  transcription.
-                </p>
-              </motion.div>
+              <VideoNotStoredDisclaimer />
             </div>
           ) : (
-            <div className="w-full flex flex-col max-w-[1080px] mx-auto justify-center">
-              <motion.div
-                initial={{ y: 20 }}
-                animate={{ y: 0 }}
-                transition={{
-                  duration: 0.35,
-                  ease: [0.075, 0.82, 0.165, 1],
-                }}
-                className="relative md:aspect-[16/9] w-full max-w-[1080px] overflow-hidden bg-[#1D2B3A] rounded-lg ring-1 ring-gray-900/5 shadow-md flex flex-col items-center justify-center"
-              >
-                <p className="text-white font-medium text-lg text-center max-w-3xl">
-                  Camera permission is denied. We don{`'`}t store your attempts
-                  anywhere, but we understand not wanting to give us access to
-                  your camera. Try again by opening this page in an incognito
-                  window {`(`}or enable permissions in your browser settings
-                  {`)`}.
-                </p>
-              </motion.div>
-              <div className="flex flex-row space-x-4 mt-8 justify-end">
-                <button
-                  // onClick={() => setStep(1)}
-                  className="group max-w-[200px] rounded-full px-4 py-2 text-[13px] font-semibold transition-all flex items-center justify-center bg-[#f5f7f9] text-[#1E2B3A] no-underline active:scale-95 scale-100 duration-75"
-                  style={{
-                    boxShadow: "0 1px 1px #0c192714, 0 1px 3px #0c192724",
-                  }}
-                >
-                  Restart demo
-                </button>
-                <Link
-                  href="https://github.com/hmellahi/mockinterview-ai"
-                  target="_blank"
-                  className="group rounded-full pl-[8px] min-w-[180px] pr-4 py-2 text-[13px] font-semibold transition-all flex items-center justify-center bg-[#1E2B3A] text-white hover:[linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), #0D2247] no-underline flex gap-x-2  active:scale-95 scale-100 duration-75"
-                  style={{
-                    boxShadow:
-                      "0px 1px 4px rgba(13, 34, 71, 0.17), inset 0px 0px 0px 1px #061530, inset 0px 0px 0px 2px rgba(255, 255, 255, 0.1)",
-                  }}
-                >
-                  <span className="w-5 h-5 rounded-full bg-[#407BBF] flex items-center justify-center">
-                    <svg
-                      className="w-[16px] h-[16px] text-white"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M4.75 7.75C4.75 6.64543 5.64543 5.75 6.75 5.75H17.25C18.3546 5.75 19.25 6.64543 19.25 7.75V16.25C19.25 17.3546 18.3546 18.25 17.25 18.25H6.75C5.64543 18.25 4.75 17.3546 4.75 16.25V7.75Z"
-                      ></path>
-                      <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M5.5 6.5L12 12.25L18.5 6.5"
-                      ></path>
-                    </svg>
-                  </span>
-                  Star on Github
-                </Link>
-              </div>
-            </div>
+            <NoCameraAccess />
           )}
         </div>
       </div>
