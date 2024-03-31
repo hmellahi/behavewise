@@ -10,12 +10,14 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Webcam from "react-webcam";
 import { v4 as uuid } from "uuid";
+import InterviewerVideo from "./components/InterviewerVideo";
 import LoadingState from "./components/LoadingState";
 import NoCameraAccess from "./components/NoCameraAccess";
 import VideoNotStoredDisclaimer from "./components/VideoNotStoredDisclaimer";
 import RestartButton from "./components/ui/RestartButton";
 import StartTimerButton from "./components/ui/StartTimerButton";
 import StopTimerButton from "./components/ui/StopTimerButton";
+import Timer from "./components/ui/Timer";
 
 export default function DemoPage() {
   const [selected, setSelected] = useState(questions[0]);
@@ -35,7 +37,6 @@ export default function DemoPage() {
   const [isSubmitting, setSubmitting] = useState(false);
   const [status, setStatus] = useState("Processing");
   const [isSuccess, setIsSuccess] = useState(false);
-  const [isVisible, setIsVisible] = useState(true);
   const [isDesktop, setIsDesktop] = useState(false);
   const [completed, setCompleted] = useState(false);
   const [transcript, setTranscript] = useState("");
@@ -54,7 +55,6 @@ export default function DemoPage() {
       }
 
       setCapturing(true);
-      setIsVisible(false);
 
       mediaRecorderRef.current = new MediaRecorder(
         webcamRef?.current?.stream as MediaStream
@@ -167,22 +167,6 @@ export default function DemoPage() {
         }
       );
       const results = await upload.json();
-      // const results = {
-      //   error: "HEll",
-      //   transcript: `Firstly, I'd like to thank you for considering me for this interview.
-
-      // I started learning to code back in 2019 when I was in high school. Following that, I pursued my education at 1337, which is a one-of-a-kind software engineering school. Unlike traditional schools, 1337 follows a peer learning approach, meaning we didn't have teachers. Instead, we taught each other to complete different school projects.
-
-      // After graduating, I joined Leyton as an intern. After completing my internship, I received an offer as a Full Stack Engineer. I was then promoted to an intermediate position within just one year.
-
-      // During my spare time, I was part of the founding team of fileqa, a platform that instantly provides users with insights from documents.
-
-      // Looking ahead, I am excited about expanding my skills and contributing to innovative and more challenging projects.`,
-      // };
-
-      // const upload = {
-      //   ok: true,
-      // };
 
       if (upload.ok) {
         setIsSuccess(true);
@@ -258,7 +242,6 @@ export default function DemoPage() {
     setRecordedChunks([]);
     setVideoEnded(false);
     setCapturing(false);
-    setIsVisible(true);
     setSeconds(150);
   }
 
@@ -297,31 +280,11 @@ export default function DemoPage() {
                   </div>
                 )}
                 <div className="relative z-10 h-full w-full rounded-lg">
-                  <div className="absolute top-5 lg:top-10 left-5 lg:left-10 z-20">
-                    <span className="inline-flex items-center rounded-md bg-gray-100 px-2.5 py-0.5 text-sm font-medium text-gray-800">
-                      {new Date(seconds * 1000).toISOString().slice(14, 19)}
-                    </span>
-                  </div>
-                  {isVisible && ( // If the video is visible (on screen) we show it
-                    <div className="block absolute top-[10px] sm:top-[20px] lg:top-[40px] left-auto right-[10px] sm:right-[20px] md:right-10 h-[80px] sm:h-[140px] md:h-[180px] aspect-video rounded z-20">
-                      <div className="h-full w-full aspect-video rounded md:rounded-lg lg:rounded-xl">
-                        <video
-                          id="question-video"
-                          onEnded={() => setVideoEnded(true)}
-                          controls={false}
-                          ref={vidRef}
-                          playsInline
-                          className="h-full object-cover w-full rounded-md md:rounded-[12px] aspect-video"
-                          crossOrigin="anonymous"
-                        >
-                          <source
-                            src="https://liftoff-public.s3.amazonaws.com/DemoInterviewMale.mp4"
-                            type="video/mp4"
-                          />
-                        </video>
-                      </div>
-                    </div>
-                  )}
+                  <Timer seconds={seconds} />
+                  <InterviewerVideo
+                    setVideoEnded={setVideoEnded}
+                    ref={vidRef}
+                  ></InterviewerVideo>
                   <Webcam
                     mirrored
                     audio
