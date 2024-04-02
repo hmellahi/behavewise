@@ -34,6 +34,7 @@
     "uuidv4": "^6.2.13"
   },
   "devDependencies": {
+    "@svgr/webpack": "^8.1.0",
     "@tailwindcss/typography": "^0.5.9",
     "@types/formidable": "^2.0.5",
     "autoprefixer": "^10.4.14",
