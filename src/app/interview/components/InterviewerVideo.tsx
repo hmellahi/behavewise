@@ -9,6 +9,7 @@ const InterviewerVideo = forwardRef(
             id="question-video"
             onEnded={() => onVideoEnded()}
             controls={false}
+            // @ts-ignore
             ref={ref}
             playsInline
             className="h-full object-cover w-full rounded-md md:rounded-[12px] aspect-video"
@@ -24,5 +25,7 @@ const InterviewerVideo = forwardRef(
     );
   }
 );
+
+InterviewerVideo.displayName = "InterviewerVideo";
 
 export default InterviewerVideo;

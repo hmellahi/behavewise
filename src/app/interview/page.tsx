@@ -1,18 +1,15 @@
 "use client";
-import SuccessButton from "@/components/common/SuccessButton";
-import { RightArrow } from "@/components/svgs";
 import Spinner from "@/components/svgs/Spinner";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Webcam from "react-webcam";
-import InterviewerVideo from "./components/InterviewerVideo";
+import CountDown from "./components/CountDown";
+import InterviewContainer from "./components/InterviewContainer";
 import LoadingState from "./components/LoadingState";
 import NoCameraAccess from "./components/NoCameraAccess";
+import VideoActions from "./components/VideoAction";
 import VideoNotStoredDisclaimer from "./components/VideoNotStoredDisclaimer";
-import RestartButton from "./components/ui/RestartButton";
-import StartTimerButton from "./components/ui/StartTimerButton";
-import StopTimerButton from "./components/ui/StopTimerButton";
-import Timer from "./components/ui/Timer";
+import LinearTranslationAnimation from "./components/animations/LinearTranslationAnimation";
 
 export default function Interview() {
   const [loading, setLoading] = useState(true);
@@ -28,17 +25,16 @@ export default function Interview() {
   const [isSubmitting, setSubmitting] = useState(false);
   const [status, setStatus] = useState("Processing");
   const [isSuccess, setIsSuccess] = useState(false);
-  const [isDesktop, setIsDesktop] = useState(false);
-
-  useEffect(() => {
-    setIsDesktop(window.innerWidth >= 768);
-  }, []);
-
+  
+  // Once the recording starts
+  // -> StartRecording
+  // -> display the stop recording button
+  // -> the timer will starts
   useEffect(() => {
     if (!videoEnded) {
       return;
     }
-    
+
     const element = document.getElementById("startTimer");
 
     if (element) {
@@ -84,6 +80,7 @@ export default function Interview() {
     setCapturing(false);
   }, [mediaRecorderRef, webcamRef, setCapturing]);
 
+  // Stop recording once the timer ends
   useEffect(() => {
     let timer: any = null;
     if (capturing) {
@@ -110,10 +107,6 @@ export default function Interview() {
     setSeconds(150);
   }
 
-  const videoConstraints = isDesktop
-    ? { width: 1280, height: 720, facingMode: "user" }
-    : { width: 480, height: 640, facingMode: "user" };
-
   const handleUserMedia = () => {
     setTimeout(() => {
       setLoading(false);
@@ -130,103 +123,36 @@ export default function Interview() {
               <span className="text-[14px] leading-[20px] text-[#1a2b3b] font-normal mb-4">
                 Asked by top companies like Google, Facebook and more
               </span>
-              <motion.div
-                initial={{ y: -20 }}
-                animate={{ y: 0 }}
-                transition={{
-                  duration: 0.35,
-                  ease: [0.075, 0.82, 0.965, 1],
-                }}
-                className="relative aspect-[16/9] w-full max-w-[1080px] overflow-hidden bg-[#1D2B3A] rounded-lg ring-1 ring-gray-900/5 shadow-md"
-              >
+              <LinearTranslationAnimation>
+                <InterviewContainer
+                  webcamRef={webcamRef}
+                  seconds={seconds}
+                  setVideoEnded={setVideoEnded}
+                  setRecordingPermission={setRecordingPermission}
+                  vidRef={vidRef}
+                  handleUserMedia={handleUserMedia}
+                />
                 {!cameraLoaded && (
                   <div className="text-white absolute top-1/2 left-1/2 z-20 flex items-center">
                     <Spinner className="animate-spin h-4 w-4 text-white mx-auto my-0.5" />
                   </div>
                 )}
-                <div className="relative z-10 h-full w-full rounded-lg">
-                  <Timer seconds={seconds} />
-                  <InterviewerVideo
-                    onVideoEnded={() => setVideoEnded(true)}
-                    ref={vidRef}
-                  ></InterviewerVideo>
-                  <Webcam
-                    mirrored
-                    audio
-                    muted
-                    ref={webcamRef}
-                    videoConstraints={videoConstraints}
-                    onUserMedia={handleUserMedia}
-                    onUserMediaError={(error) => {
-                      setRecordingPermission(false);
-                    }}
-                    className="absolute z-10 min-h-[100%] min-w-[100%] h-auto w-auto object-cover"
-                  />
-                </div>
                 {loading && <LoadingState />}
-
                 {cameraLoaded && (
-                  <div className="absolute bottom-0 left-0 z-50 flex h-[82px] w-full items-center justify-center">
-                    {recordedChunks.length > 0 ? (
-                      <>
-                        {isSuccess ? (
-                          <SuccessButton />
-                        ) : (
-                          <div className="flex flex-row gap-2">
-                            {!isSubmitting && (
-                              <RestartButton
-                                onClick={restartVideo}
-                              ></RestartButton>
-                            )}
-                            <button
-                              onClick={SubmitAnswer}
-                              disabled={isSubmitting}
-                              className="group rounded-full min-w-[140px] px-4 py-2 text-[13px] font-semibold transition-all flex items-center justify-center bg-[#1E2B3A] text-white hover:[linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), #0D2247] no-underline flex  active:scale-95 scale-100 duration-75  disabled:cursor-not-allowed"
-                              style={{
-                                boxShadow:
-                                  "0px 1px 4px rgba(13, 34, 71, 0.17), inset 0px 0px 0px 1px #061530, inset 0px 0px 0px 2px rgba(255, 255, 255, 0.1)",
-                              }}
-                            >
-                              <span>
-                                {isSubmitting ? (
-                                  <div className="flex items-center justify-center gap-x-2">
-                                    <Spinner className="animate-spin h-5 w-5 text-slate-50 mx-auto" />
-                                    <span>{status}</span>
-                                  </div>
-                                ) : (
-                                  <div className="flex items-center justify-center gap-x-2">
-                                    <span>Process transcript</span>
-                                    <RightArrow className="w-5 h-5" />
-                                  </div>
-                                )}
-                              </span>
-                            </button>
-                          </div>
-                        )}
-                      </>
-                    ) : (
-                      <div className="absolute bottom-[6px] md:bottom-5 left-5 right-5">
-                        <div className="lg:mt-4 flex flex-col items-center justify-center gap-2">
-                          {capturing ? (
-                            <StopTimerButton
-                              handleStopCaptureClick={handleStopCaptureClick}
-                            />
-                          ) : (
-                            <StartTimerButton
-                              handleStartCaptureClick={handleStartCaptureClick}
-                            />
-                          )}
-                          <div className="w-12"></div>
-                        </div>
-                      </div>
-                    )}
-                  </div>
+                  <VideoActions
+                    capturing={capturing}
+                    length={recordedChunks.length}
+                    isSubmitting={isSubmitting}
+                    status={status}
+                    isSuccess={isSuccess}
+                    handleStartCaptureClick={handleStartCaptureClick}
+                    handleStopCaptureClick={handleStopCaptureClick}
+                    SubmitAnswer={SubmitAnswer}
+                    restartVideo={restartVideo}
+                  />
                 )}
-                <div
-                  className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 text-5xl text-white font-semibold text-center"
-                  id="countdown"
-                ></div>
-              </motion.div>
+                <CountDown />
+              </LinearTranslationAnimation>
               <VideoNotStoredDisclaimer />
             </div>
           ) : (
