@@ -1,5 +1,6 @@
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
+import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
 import { NextFetchEvent, NextRequest, NextResponse } from "next/server";
 
 export default async function middleware(
@@ -26,11 +27,14 @@ export default async function middleware(
       `ratelimit_middleware_${ip}`
     );
     event.waitUntil(pending);
+    
 
     const res = success
       ? NextResponse.next()
       : NextResponse.redirect(new URL("/api/blocked", request.url));
+    const supabase = createMiddlewareClient({ req:request, res });
 
+    await supabase.auth.getSession();
     res.headers.set("X-RateLimit-Limit", limit.toString());
     res.headers.set("X-RateLimit-Remaining", remaining.toString());
     res.headers.set("X-RateLimit-Reset", reset.toString());
