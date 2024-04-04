@@ -1,1 +1,1 @@
-export const QUESTION_TIME_LIMIT = 4;
+export const QUESTION_TIME_LIMIT = 150;

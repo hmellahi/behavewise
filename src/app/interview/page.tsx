@@ -150,7 +150,7 @@ export default function Interview() {
   const currentQuestion = interviewQuestions[currentQuestionIndex];
 
   if (!currentQuestion) {
-    return <div>Byee</div>;
+    return <div></div>;
   }
 
   return (
