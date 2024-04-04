@@ -3,6 +3,7 @@ import InterviewerVideo from "@/app/interview/components/InterviewerVideo";
 import Timer from "@/app/interview/components/ui/Timer";
 import { useEffect, useState } from "react";
 import Webcam from "react-webcam";
+import { interviewQuestion } from "../types/Interview";
 
 interface InterviewContainerProps {
   webcamRef: React.RefObject<Webcam>;
@@ -11,6 +12,7 @@ interface InterviewContainerProps {
   vidRef: React.RefObject<HTMLVideoElement>;
   handleUserMedia: () => void;
   setRecordingPermission: (value: boolean) => void;
+  question: interviewQuestion;
 }
 
 export default function InterviewContainer({
@@ -20,6 +22,7 @@ export default function InterviewContainer({
   vidRef,
   handleUserMedia,
   setRecordingPermission,
+  question,
 }: Readonly<InterviewContainerProps>) {
   const [isDesktop, setIsDesktop] = useState(false);
 
@@ -34,7 +37,11 @@ export default function InterviewContainer({
   return (
     <div className="relative z-10 h-full w-full rounded-lg">
       <Timer seconds={seconds} />
-      <InterviewerVideo onVideoEnded={() => setVideoEnded(true)} ref={vidRef} />
+      <InterviewerVideo
+        onVideoEnded={() => setVideoEnded(true)}
+        vidRef={vidRef}
+        question={question}
+      />
       <Webcam
         mirrored
         audio

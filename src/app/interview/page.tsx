@@ -1,6 +1,7 @@
 "use client";
 import Spinner from "@/components/svgs/Spinner";
 import { AnimatePresence } from "framer-motion";
+import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Webcam from "react-webcam";
 import CountDown from "./components/CountDown";
@@ -10,6 +11,8 @@ import NoCameraAccess from "./components/NoCameraAccess";
 import VideoActions from "./components/VideoAction";
 import VideoNotStoredDisclaimer from "./components/VideoNotStoredDisclaimer";
 import LinearTranslationAnimation from "./components/animations/LinearTranslationAnimation";
+import { QUESTION_TIME_LIMIT } from "./constants/interview";
+import interviewQuestions from "./constants/interviewQuestions";
 
 export default function Interview() {
   const [loading, setLoading] = useState(true);
@@ -17,15 +20,16 @@ export default function Interview() {
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const [capturing, setCapturing] = useState(false);
   const [recordedChunks, setRecordedChunks] = useState<Blob[]>([]);
-  const [seconds, setSeconds] = useState(150);
+  const [seconds, setSeconds] = useState(QUESTION_TIME_LIMIT);
   const [videoEnded, setVideoEnded] = useState(false);
   const [recordingPermission, setRecordingPermission] = useState(true);
   const [cameraLoaded, setCameraLoaded] = useState(false);
   const vidRef = useRef<HTMLVideoElement>(null);
   const [isSubmitting, setSubmitting] = useState(false);
   const [status, setStatus] = useState("Processing");
-  const [isSuccess, setIsSuccess] = useState(false);
-  
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const router = useRouter();
+
   // Once the recording starts
   // -> StartRecording
   // -> display the stop recording button
@@ -61,6 +65,7 @@ export default function Interview() {
 
     if (vidRef.current) {
       vidRef.current.play();
+      // play only the first 1s of the video..
     }
   }, [webcamRef, setCapturing, mediaRecorderRef]);
 
@@ -88,9 +93,7 @@ export default function Interview() {
         setSeconds((seconds) => seconds - 1);
       }, 1000);
       if (seconds === 0) {
-        handleStopCaptureClick();
-        setCapturing(false);
-        setSeconds(0);
+        SubmitAnswer();
       }
     }
     return () => {
@@ -98,13 +101,43 @@ export default function Interview() {
     };
   });
 
-  const SubmitAnswer = () => {};
+  const SubmitAnswer = () => {
+    // move to next question
+    const isLastQuestion =
+      currentQuestionIndex + 1 === interviewQuestions.length;
+
+    console.log({
+      isLastQuestion,
+      currentQuestionIndex,
+      i: interviewQuestions.length,
+    });
+
+    if (isLastQuestion) {
+      router.push("/feedback");
+    }
+
+    setSubmitting(false);
+    restartVideo()
+    setCurrentQuestionIndex(currentQuestionIndex + 1);
+  };
+
+  useEffect(() => {
+    if (currentQuestionIndex === 0) {
+      return;
+    }
+    vidRef.current?.load();
+    handleStartCaptureClick();
+  }, [currentQuestionIndex]);
 
   function restartVideo() {
-    setRecordedChunks([]);
+    // remove the last recording..
+    setRecordedChunks((recordedChunks) => recordedChunks.slice(0, -1));
+    console.log(recordedChunks)
+    // restart the video
     setVideoEnded(false);
     setCapturing(false);
-    setSeconds(150);
+    // restart the timer
+    setSeconds(QUESTION_TIME_LIMIT);
   }
 
   const handleUserMedia = () => {
@@ -114,9 +147,15 @@ export default function Interview() {
     }, 1000);
   };
 
+  const currentQuestion = interviewQuestions[currentQuestionIndex];
+
+  if (!currentQuestion) {
+    return <div></div>;
+  }
+
   return (
     <AnimatePresence>
-      <div className="w-full min-h-screen flex flex-col px-4 pt-2 pb-8 md:px-8 md:py-2 bg-[#FCFCFC] relative overflow-x-hidden">
+      <div className="w-full min-h-screen flex flex-col px-4 pt-2 pb-8 md:px-8 md:py-2 bg-[#363637] relative overflow-x-hidden">
         <div className="h-full w-full items-center flex flex-col mt-[10vh]">
           {recordingPermission ? (
             <div className="w-full flex flex-col max-w-[1080px] mx-auto justify-center">
@@ -131,6 +170,7 @@ export default function Interview() {
                   setRecordingPermission={setRecordingPermission}
                   vidRef={vidRef}
                   handleUserMedia={handleUserMedia}
+                  question={currentQuestion}
                 />
                 {!cameraLoaded && (
                   <div className="text-white absolute top-1/2 left-1/2 z-20 flex items-center">
@@ -144,7 +184,6 @@ export default function Interview() {
                     length={recordedChunks.length}
                     isSubmitting={isSubmitting}
                     status={status}
-                    isSuccess={isSuccess}
                     handleStartCaptureClick={handleStartCaptureClick}
                     handleStopCaptureClick={handleStopCaptureClick}
                     SubmitAnswer={SubmitAnswer}
