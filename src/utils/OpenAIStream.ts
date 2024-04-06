@@ -38,6 +38,15 @@ export async function OpenAIStream(payload: OpenAIStreamPayload) {
     body: JSON.stringify(payload),
   });
 
+  if (!payload.stream) {
+    const results = await res.json();
+    // handle errors
+    if (!res.ok) {
+      throw new Error(results?.error?.message || res.statusText);
+    }
+    return results?.choices[0]?.message?.content;
+  }
+
   const stream = new ReadableStream({
     async start(controller) {
       // callback
