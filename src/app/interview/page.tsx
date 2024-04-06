@@ -13,6 +13,7 @@ import VideoNotStoredDisclaimer from "./components/VideoNotStoredDisclaimer";
 import LinearTranslationAnimation from "./components/animations/LinearTranslationAnimation";
 import { QUESTION_TIME_LIMIT } from "./constants/interview";
 import interviewQuestions from "./constants/interviewQuestions";
+import useEvaluateAnswer from "./hooks/evaluateAnswer";
 
 export default function Interview() {
   const [loading, setLoading] = useState(true);
@@ -26,8 +27,8 @@ export default function Interview() {
   const [cameraLoaded, setCameraLoaded] = useState(false);
   const vidRef = useRef<HTMLVideoElement>(null);
   const [isSubmitting, setSubmitting] = useState(false);
-  const [status, setStatus] = useState("Processing");
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const { evaluateAnswer, status } = useEvaluateAnswer();
   const router = useRouter();
 
   // Once the recording starts
@@ -101,11 +102,12 @@ export default function Interview() {
     };
   });
 
-  const SubmitAnswer = () => {
+  const SubmitAnswer = async () => {
     // move to next question
     const isLastQuestion =
       currentQuestionIndex + 1 === interviewQuestions.length;
 
+    setSubmitting(true);
     console.log({
       isLastQuestion,
       currentQuestionIndex,
@@ -115,9 +117,15 @@ export default function Interview() {
     if (isLastQuestion) {
       router.push("/feedback");
     }
+    console.log({ recordedChunks });
+    try {
+      await evaluateAnswer(recordedChunks, currentQuestion);
+    } catch (e) {
+      console.log(e);
+    }
 
     setSubmitting(false);
-    restartVideo()
+    restartVideo();
     setCurrentQuestionIndex(currentQuestionIndex + 1);
   };
 
@@ -132,7 +140,7 @@ export default function Interview() {
   function restartVideo() {
     // remove the last recording..
     setRecordedChunks((recordedChunks) => recordedChunks.slice(0, -1));
-    console.log(recordedChunks)
+    console.log(recordedChunks);
     // restart the video
     setVideoEnded(false);
     setCapturing(false);
