@@ -9,6 +9,42 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Interview {
+  id        Int      @id @default(autoincrement())
+  userId    Int?
+  status    String
+  result    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model User {
+  id     Int     @id @default(autoincrement())
+  // Other user fields...
+  Answer Answer[]
+}
+
+model Question {
+  id       Int      @id @default(autoincrement())
+  question String
+  videoUrl String?
+  // Relation to Answers table (optional)
+  answers  Answer[]
+}
+
+model Answer {
+  id          Int       @id @default(autoincrement())
+  interviewId Int
+  questionId  Int
+  answer      String
+  feedback    Json?
+  user        User      @relation(fields: [userId], references: [id])
+  userId      Int       @unique
+  // Relation to Question table (optional)
+  question    Question? @relation(fields: [questionId], references: [id])
 }
