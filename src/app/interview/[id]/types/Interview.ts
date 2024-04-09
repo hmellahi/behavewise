@@ -1,5 +1,5 @@
 export type interviewQuestion = {
-  id: number;
+  id: string;
   videoUrl: string;
   caption: string;
   prompt:string

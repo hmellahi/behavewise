@@ -41,27 +41,22 @@ export default async function handler(
     files: { file },
   } = formData;
 
-  console.log(formData);
   
   try {
-    // const question = questionService.getQuestionById(questionId);
-    // const { transcript } = await transcribe(file);
-    // console.log({ question, transcript });
+    const question = questionService.getQuestionById(questionId);
+    const { transcript } = await transcribe(file);
 
-    // const feedback = await evaluateAnswer(question, transcript);
-    // console.log({ feedback });
-    // res.status(200).json({ transcript, feedback });
-    // return undefined;
-    const transcript = 'wtfff';
-    const feedback = {'w': 'wtf bruh'}
+    const feedback = await evaluateAnswer(question, transcript);
+
     await interviewService.saveAnswer({
-      audioUrl: file.path, // to change
+      audioUrl: file?.path, // TODO change
       transcript,
       feedback,
       userId: null, // todo change
       interviewId,
       questionId,
     })
+    res.status(200).json({ transcript, feedback });
   } catch (error) {
     console.error("server error", error);
     res.status(500).json({ error });

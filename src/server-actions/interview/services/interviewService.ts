@@ -30,6 +30,7 @@ async function saveAnswer(answer: CreateAnswerDto) {
   const answersCount = await answerService.countAnswers(interviewId);
   const questionsCount = await questionService.countQuestions(interviewId);
   if (answersCount === questionsCount) {
+    console.log({answersCount, questionsCount})
     await evaluateInterview(interviewId);
   }
 }

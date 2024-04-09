@@ -2,7 +2,7 @@ import interviewQuestions from "@/app/interview/[id]/constants/interviewQuestion
 
 const getQuestionById = (questionId: string) => {
   const question = interviewQuestions.find(
-    (question) => question.id === parseInt(questionId)
+    (question) => question.id === questionId
   );
   if (!question) {
     throw new Error("Question not found");

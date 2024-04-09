@@ -2,7 +2,7 @@ import { interviewQuestion } from "../types/Interview";
 
 const interviewQuestions: interviewQuestion[] = [
   {
-    id: 2,
+    id: "2",
     videoUrl:
       "https://res.cloudinary.com/dv2xxj5vi/video/upload/v1712204779/interview/todpa1qrqw1nyz2522q9.mp4",
     caption:
@@ -11,7 +11,7 @@ const interviewQuestions: interviewQuestion[] = [
       "Please also give feedback on the candidate's communication skills. Make sure their response is structured (perhaps using the STAR or PAR frameworks).",
   },
   {
-    id: 1,
+    id: "1",
     videoUrl:
       "https://res.cloudinary.com/dv2xxj5vi/video/upload/f_auto:video,q_auto/ejqd1ksxpbbf2lwpk7le",
     caption:
@@ -20,7 +20,7 @@ const interviewQuestions: interviewQuestion[] = [
       "Please also give feedback on the candidate's communication skills. Make sure their response is structured (perhaps using the STAR or PAR frameworks).",
   },
   {
-    id: 3,
+    id: "3",
     videoUrl:
       "https://res.cloudinary.com/dv2xxj5vi/video/upload/v1712201664/interview/ypzwd3hdffkrxs4qox7q.mp4",
     caption: "So, why are you interested in joining our company?",
