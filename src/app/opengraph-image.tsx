@@ -27,10 +27,7 @@ export default async function OG() {
         }}
       >
         <img
-          src={new URL(
-            "public/apple-touch-icon.png",
-            import.meta.url
-          ).toString()}
+          src="/apple-touch-icon.png"
           alt="Liftoff Logo"
           tw="w-20 h-20 mb-4 opacity-95"
         />

@@ -1,35 +1,40 @@
+import { prisma } from "@/lib/prisma";
+import { CreateAnswerDto } from "@/types/interview";
 
-import { Prisma } from "@prisma/client";
-
-function saveAnswer({
+async function save({
   audioUrl,
-  script,
+  transcript,
   feedback,
   interviewId,
   userId,
   questionId,
-}: {
-  audioUrl: string;
-  script: string;
-  feedback: string;
-  userId: string;
-  interviewId: string;
-  questionId: string;
-}) {
+}: CreateAnswerDto) {
   // save it in prisma
-  const answer = Prisma.createAnswer({
-    audioUrl,
-    script,
-    feedback: JSON.stringify(feedback),
-    interviewId,
-    userId,
-    questionId,
+  const answer = await prisma.answer.create({
+    // audioUrl,
+    data: {
+      transcript,
+      feedback: JSON.stringify(feedback),
+      interviewId,
+      userId,
+      questionId,
+    },
   });
   return answer;
 }
 
+const countAnswers = (interviewId: string) => {
+  // get count of answers for interview
+  return prisma.answer.count({
+    where: {
+      interviewId: interviewId,
+    },
+  });
+};
+
 const answerService = {
-  saveAnswer,
+  save,
+  countAnswers,
 };
 
 export default answerService;

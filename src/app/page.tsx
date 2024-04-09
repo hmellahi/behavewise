@@ -1,15 +1,20 @@
 "use client";
 
 import { gradient } from "@/components/ui/Gradient";
+import * as interviewActions from "@/server-actions/interview/interview.actions";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { useEffect } from "react";
-// import First from '@/../public/svgs/First.svg'
 
 export default function Home() {
   useEffect(() => {
     gradient.initGradient("#gradient-canvas");
   }, []);
+
+  const createAndRedirectToInterview = async () => {
+    const createdInterview = await interviewActions.startNewInterview();
+    window.location.href = `/interview/${createdInterview.id} `;
+  };
 
   return (
     <AnimatePresence>
@@ -146,8 +151,8 @@ export default function Home() {
                 ease: [0.075, 0.82, 0.965, 1],
               }}
             >
-              <Link
-                href="/interview"
+              <button
+                onClick={createAndRedirectToInterview}
                 className="group rounded-full px-4 py-2 text-[13px] font-semibold transition-all flex items-center justify-center bg-[#f5f7f9] text-[#1E2B3A] no-underline active:scale-95 scale-100 duration-75"
                 style={{
                   boxShadow: "0 1px 1px #0c192714, 0 1px 3px #0c192724",
@@ -175,7 +180,7 @@ export default function Home() {
                     strokeLinejoin="round"
                   />
                 </svg>
-              </Link>
+              </button>
             </motion.div>
           </div>
         </main>

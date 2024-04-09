@@ -7,10 +7,15 @@ import { interviewQuestion } from "../types/Interview";
 const useEvaluateAnswer = () => {
   const [status, setStatus] = useState("Processing");
 
-  const evaluateAnswer = async (
-    recordedChunks: Blob[],
-    question: interviewQuestion
-  ) => {
+  const evaluateAnswer = async ({
+    recordedChunks,
+    question,
+    interviewId
+  }: {
+    recordedChunks: Blob[];
+    question: interviewQuestion;
+    interviewId:string
+  }) => {
     if (!recordedChunks.length) {
       return;
     }
@@ -52,33 +57,21 @@ const useEvaluateAnswer = () => {
       type: "audio/mp3",
     });
 
-    // downlaod the output file..
-    const url = URL.createObjectURL(output);
-    const link = document.createElement("a");
-    link.href = url;
-    link.setAttribute("download", `${unique_id}.mp3`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-
-
     const formData = new FormData();
     formData.append("file", output, `${unique_id}.mp3`);
     formData.append("model", "whisper-1");
     formData.append("questionId", question.id.toString());
+    formData.append("interviewId", interviewId);
 
     setStatus("Transcribing");
 
-    const upload = await fetch(
-      `/api/submit-answer`,
-      {
-        method: "POST",
-        body: formData,
-      }
-    );
+    const upload = await fetch(`/api/submit-answer`, {
+      method: "POST",
+      body: formData,
+    });
 
     const results = await upload.json();
-    console.log({ r : results });
+    console.log({ r: results });
   };
 
   return { evaluateAnswer, status, setStatus };

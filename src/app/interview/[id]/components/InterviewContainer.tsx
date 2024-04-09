@@ -1,6 +1,6 @@
 "use client";
-import InterviewerVideo from "@/app/interview/components/InterviewerVideo";
-import Timer from "@/app/interview/components/ui/Timer";
+import InterviewerVideo from "@/app/interview/[id]/components/InterviewerVideo";
+import Timer from "@/app/interview/[id]/components/ui/Timer";
 import { useEffect, useState } from "react";
 import Webcam from "react-webcam";
 import { interviewQuestion } from "../types/Interview";

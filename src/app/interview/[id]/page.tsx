@@ -15,7 +15,7 @@ import { QUESTION_TIME_LIMIT } from "./constants/interview";
 import interviewQuestions from "./constants/interviewQuestions";
 import useEvaluateAnswer from "./hooks/evaluateAnswer";
 
-export default function Interview() {
+export default function Interview({ params }: { params: { id: string } }) {
   const [loading, setLoading] = useState(true);
   const webcamRef = useRef<Webcam | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -30,7 +30,7 @@ export default function Interview() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const { evaluateAnswer, status } = useEvaluateAnswer();
   const router = useRouter();
-
+  const interviewId = params.id as string;
   // Once the recording starts
   // -> StartRecording
   // -> display the stop recording button
@@ -119,7 +119,11 @@ export default function Interview() {
     }
     console.log({ recordedChunks });
     try {
-      await evaluateAnswer(recordedChunks, currentQuestion);
+      await evaluateAnswer({
+        recordedChunks,
+        question: currentQuestion,
+        interviewId,
+      });
     } catch (e) {
       console.log(e);
     }

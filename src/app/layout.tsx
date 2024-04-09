@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     description:
       "Liftoff is an AI-powered mock interview platform that helps you practice for your next job interview.",
     images: ["https://demo.useliftoff.com/opengraph-image"],
-    creator: "@tmeyer_me",
+    creator: "@Hmellahiii",
   },
   metadataBase: new URL("https://demo.useliftoff.com"),
   themeColor: "#FFF",
