@@ -24,6 +24,7 @@ export const metadata: Metadata = {
   },
   metadataBase: new URL("https://demo.useliftoff.com"),
   themeColor: "#FFF",
+  description: "AI-powered mock interview platform that helps you practice for your next job interview."
 };
 
 export default async function RootLayout({

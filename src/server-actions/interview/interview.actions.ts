@@ -13,8 +13,22 @@ export const startNewInterview = async (): Promise<Interview> => {
   return createdInterview;
 };
 
-const interviewActions = {
-  startNewInterview,
-};
+export const fetchInterviewFeedback = async (interviewId: string) => {
+  const interview = await prisma.interview.findFirst({
+    where: {
+      id: interviewId,
+    },
+  });
 
-// export default interviewActions;
+  if (!interview) return null
+  // fetch answers
+  const answers = await prisma.answer.findMany({
+    where: {
+      interviewId,
+    },
+  });
+  return {
+    ...interview,
+    answers,
+  };
+}
