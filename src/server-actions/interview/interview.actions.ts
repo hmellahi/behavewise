@@ -1,5 +1,6 @@
 "use server";
 
+import interviewQuestions from "@/app/(dashboard)/interview/[id]/constants/interviewQuestions";
 import { prisma } from "@/lib/prisma";
 import { Interview } from "@prisma/client";
 
@@ -20,15 +21,27 @@ export const fetchInterviewFeedback = async (interviewId: string) => {
     },
   });
 
-  if (!interview) return null
+  if (!interview) return null;
   // fetch answers
-  const answers = await prisma.answer.findMany({
+  let answers = await prisma.answer.findMany({
     where: {
       interviewId,
     },
   });
+  // interviewQuestions
+  // map the interviewQuestions with answers questionid...
+  answers = answers.map((answer) => {
+    answer.question = interviewQuestions.find(
+      (question) => question.id === answer.questionId
+    );
+    // give a score from 0 to 10
+    answer.score = Math.floor(Math.random() * 10);
+    return answer
+  });
+  // answers.questionId -> value
+
   return {
     ...interview,
     answers,
   };
-}
+};

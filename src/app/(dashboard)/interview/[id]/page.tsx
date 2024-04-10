@@ -167,8 +167,8 @@ export default function Interview({ params }: { params: { id: string } }) {
 
   return (
     <AnimatePresence>
-      <div className="w-full min-h-screen flex flex-col px-4 pt-2 pb-8 md:px-8 md:py-2 bg-[#363637] relative overflow-x-hidden">
-        <div className="h-full w-full items-center flex flex-col mt-[10vh]">
+      <div className="w-full min-h-screen flex flex-col px-4 md:px-8 relative overflow-x-hidden">
+        <div className="h-full w-full items-center flex flex-col">
           {recordingPermission ? (
             <div className="w-full flex flex-col max-w-[1080px] mx-auto justify-center">
               <span className="text-[14px] leading-[20px] text-[#1a2b3b] font-normal mb-4">

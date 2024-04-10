@@ -1,39 +1,48 @@
 "use client";
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { fetchInterviewFeedback } from "@/server-actions/interview/interview.actions";
-import { useEffect } from "react";
-
-export default function InterviewFeedback({ interview }: { interview: any }) {
-  let interviewS = interview;
+import { useEffect, useState } from "react";
+export default function InterviewFeedback({
+  initialInterviewData,
+}: {
+  initialInterviewData: any;
+}) {
+  let [interview, setInterview] = useState(initialInterviewData);
   useEffect(() => {
-    if (interviewS?.status !== "IN_PROGRESS") {
+    if (interview?.status !== "IN_PROGRESS") {
       return;
     }
     // each 1 seconds fetch the feedback
     // if its still IN_PROGRESS (feedback.status)
     // otherwise display it
     const interval = setInterval(async () => {
-      interviewS = await fetchInterviewFeedback(interview.id);
-      if (interviewS?.status === "IN_PROGRESS") {
-        return;
+      interview = await fetchInterviewFeedback(interview.id);
+      setInterview({ ...interview });
+      if (interview?.status !== "IN_PROGRESS") {
+        clearInterval(interval);
       }
-      clearInterval(interval);
     }, 1000);
   });
 
-  if (!interviewS) {
-    return "loading...";
+  if (!interview) {
+    return <div>"loading..."</div>;
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white border border-gray-300 rounded-lg">
+    <div className="max-w-5xl p-6 bg-white border border-gray-300 rounded-lg">
       <div className="flex items-start space-x-4">
-        {/* <Avatar>
-              <AvatarImage alt="@shadcn" src="https://github.com/shadcn.png" />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar> */}
-        // make it prettier?
-        {JSON.stringify(interviewS)}
+        <Avatar>
+          <AvatarImage
+            alt="@shadcn"
+            src="https://github.com/shadcn.png"
+            width={48}
+            height={60}
+          />
+          <AvatarFallback>CN</AvatarFallback>
+        </Avatar>
+        {/* // TODO  */}
+        {/* {JSON.stringify(interview)} */}
         <div>
           <h2 className="text-xl font-semibold">AI hiring manager feedback</h2>
           <p className="mt-1 text-gray-700">

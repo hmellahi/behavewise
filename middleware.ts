@@ -9,7 +9,7 @@ export default async function middleware(
 ): Promise<Response | undefined> {
   const ip = request.ip ?? "127.0.0.1";
 
-  // ratelimit for demo app: https://demo.useliftoff.com/
+  // ratelimit for demo app
   if (
     process.env.NODE_ENV != "development" &&
     process.env.UPSTASH_REDIS_REST_URL &&

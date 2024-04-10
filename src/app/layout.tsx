@@ -1,3 +1,4 @@
+import { ThemeProvider } from "@/components/contexts/theme-provider";
 import "@/styles/globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import { Metadata } from "next";
@@ -24,7 +25,8 @@ export const metadata: Metadata = {
   },
   metadataBase: new URL("https://demo.useliftoff.com"),
   themeColor: "#FFF",
-  description: "AI-powered mock interview platform that helps you practice for your next job interview."
+  description:
+    "AI-powered mock interview platform that helps you practice for your next job interview.",
 };
 
 export default async function RootLayout({
@@ -35,7 +37,14 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className="scroll-smooth antialiased [font-feature-settings:'ss01']">
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
         <Analytics />
       </body>
     </html>
