@@ -1,6 +1,5 @@
 import {
   Bell,
-  CircleUser,
   History,
   Home,
   Menu,
@@ -13,13 +12,6 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -28,6 +20,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import Image from "next/image";
 import { twMerge } from "tailwind-merge";
 
 export function SidebarLayout({
@@ -37,6 +30,19 @@ export function SidebarLayout({
   children: React.ReactNode;
   className: string;
 }) {
+  const navbarLinks = [
+    {
+      name: "Start new Interview",
+      href: "/",
+      icon: <Home className="h-4 w-4" />,
+    },
+    {
+      name: "Interviews history",
+      href: "/history",
+      icon: <History className="h-4 w-4" />,
+    },
+  ];
+
   return (
     <div
       className={twMerge(
@@ -58,45 +64,23 @@ export function SidebarLayout({
           </div>
           <div className="flex-1">
             <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
-              <Link
-                href="#"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-              >
-                <Home className="h-4 w-4" />
-                Start new interview
-              </Link>
-              <Link
-                href="#"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-              >
-                <History className="h-4 w-4" />
-                Interviews History
-                <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
-                  6
-                </Badge>
-              </Link>
+              {navbarLinks.map(({ name, href, icon }) => (
+                <Link
+                  key={name}
+                  href={href}
+                  className="flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
+                >
+                  {icon}
+                  {name}
+                </Link>
+              ))}
             </nav>
           </div>
-          <div className="mt-auto p-4">
-            <Card x-chunk="dashboard-02-chunk-0">
-              <CardHeader className="p-2 pt-0 md:p-4">
-                <CardTitle>Upgrade to Pro</CardTitle>
-                <CardDescription>
-                  Unlock all features and get unlimited access to our support
-                  team.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="p-2 pt-0 md:p-4 md:pt-0">
-                <Button size="sm" className="w-full">
-                  Upgrade
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
+          <div className="mt-auto p-4"></div>
         </div>
       </div>
       <div className="flex flex-col h-full">
-        <header className="flex h-14 items-center gap-4 border-b bg-[#F6F9F9] px-4 lg:h-[60px] lg:px-6 ">
+        <header className="flex h-14 items-center gap-4 border-b bg-[#ECEFF3] px-4 lg:h-[60px] lg:px-6 ">
           <Sheet>
             <SheetTrigger asChild>
               <Button
@@ -142,23 +126,7 @@ export function SidebarLayout({
                   Products
                 </Link>
               </nav>
-              <div className="mt-auto">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Upgrade to Pro</CardTitle>
-                    <CardDescription>
-                      Unlock all features and get unlimited access to our
-                      support team.
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <Button size="sm" className="w-full">
-                      Upgrade
-                    </Button>
-                    {/* <ThemeToggle/> */}
-                  </CardContent>
-                </Card>
-              </div>
+              <div className="mt-auto"></div>
             </SheetContent>
           </Sheet>
           <div className="w-full flex-1">
@@ -175,8 +143,17 @@ export function SidebarLayout({
           </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="secondary" size="icon" className="rounded-full">
-                <CircleUser className="h-5 w-5" />
+              <Button
+                variant="secondary"
+                size="icon"
+                className="rounded-full relative overflow-hidden"
+              >
+                <Image
+                  className="h-5 w-5"
+                  src="/avatar.png"
+                  alt="Profile"
+                  fill
+                />
                 <span className="sr-only">Toggle user menu</span>
               </Button>
             </DropdownMenuTrigger>
@@ -190,7 +167,7 @@ export function SidebarLayout({
             </DropdownMenuContent>
           </DropdownMenu>
         </header>
-        <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 bg-[#ECEFF3] overflow-y-scroll sticdky bg-dred-400 min-h-[100vh]">
+        <main className="flex flex-1 flex-col gap-4 p-4 lg:agp-6 lg:p-6 bg-[#ECEFF3] overflow-y-scroll min-h-[100vh]">
           {children}
         </main>
       </div>

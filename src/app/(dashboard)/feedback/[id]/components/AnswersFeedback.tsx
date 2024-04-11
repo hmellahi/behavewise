@@ -26,20 +26,20 @@ export function AnswersFeedback({ answers }: { answers: Answer[] }) {
   };
 
   return (
-    <div className="max-w-5xl p-4 border border-gray-300 rounded-lg bg-white">
+    <div className="max-w-5xl p-8 bg-white rounded-xl">
       <h3 className="text-2xl font-semibold mb-5">Answers Feedback</h3>
       <Accordion
         type="single"
         collapsible
-        className="w-full flex gap-4 flex-col"
+        className="w-full flex gap-2 flex-col"
       >
         {answers.map((answer) => (
           <AccordionItem
             value={answer.id}
             key={answer.id}
-            className="rounded-lg shadow-md w-full"
+            className="rounded-lg shadow-sm w-full"
           >
-            <AccordionTrigger className="bg-muted/40 p-4 border-b-[.5px] border-gray-300 rounded-t-lg w-full">
+            <AccordionTrigger className="bg-muted/40 py-3 px-4 rounded-t-lg w-full">
               <div className="flex justify-between w-full pr-5">
                 <h3 className="truncate w-[60%] text-left hover:underline">
                   {answer.question.caption}

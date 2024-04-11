@@ -12,12 +12,7 @@ export default async function Feedback({ params }: { params: { id: string } }) {
     redirect("/");
   }
 
-  // return <InterviewFeedback interview={interview} />
   return (
-    <div className="h-full overfdlow-scroll gap-6 flex flex-col">
-      <Headline>Interview Feedback</Headline>
       <InterviewFeedback initialInterviewData={interview}/>
-      <AnswersFeedback answers={interview.answers} />
-    </div>
   );
 }
