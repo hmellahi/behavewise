@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     images: ["https://behavewise.vercel.app/opengraph-image"],
     creator: "@Hmellahiii",
   },
-  // metadataBase: new URL("https://demo.useliftoff.com"), TODO
+  metadataBase: new URL("https://behavewise.vercel.app/opengraph-image"),
   themeColor: "#FFF",
   description:
     "behaveWise is an AI-powered mock interview platform that helps you practice for your next job interview.",
