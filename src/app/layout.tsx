@@ -4,11 +4,11 @@ import { Analytics } from "@vercel/analytics/react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Liftoff - AI-Powered Mock Interviews",
+  title: "behaveWise - AI-Powered Mock Interviews",
   openGraph: {
-    title: "Liftoff - AI-Powered Mock Interviews",
+    title: "behaveWise - AI-Powered Mock Interviews",
     description:
-      "Liftoff is an AI-powered mock interview platform that helps you practice for your next job interview.",
+      "behaveWise is an AI-powered mock interview platform that helps you practice for your next job interview.",
     images: [
       {
         url: "https://demo.useliftoff.com/opengraph-image",
@@ -17,16 +17,16 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Liftoff - AI-Powered Mock Interviews",
+    title: "behaveWise - AI-Powered Mock Interviews",
     description:
-      "Liftoff is an AI-powered mock interview platform that helps you practice for your next job interview.",
+      "behaveWise is an AI-powered mock interview platform that helps you practice for your next job interview.",
     images: ["https://demo.useliftoff.com/opengraph-image"],
     creator: "@Hmellahiii",
   },
-  metadataBase: new URL("https://demo.useliftoff.com"),
+  // metadataBase: new URL("https://demo.useliftoff.com"), TODO
   themeColor: "#FFF",
   description:
-    "AI-powered mock interview platform that helps you practice for your next job interview.",
+    "behaveWise is an AI-powered mock interview platform that helps you practice for your next job interview.",
 };
 
 export default async function RootLayout({

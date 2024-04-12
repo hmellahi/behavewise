@@ -1,5 +1,5 @@
+"use client";
 import {
-  Bell,
   History,
   Home,
   Menu,
@@ -9,6 +9,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
+import Headline from "@/components/ui/Headline";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -20,7 +22,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 
 export function SidebarLayout({
@@ -30,45 +32,54 @@ export function SidebarLayout({
   children: React.ReactNode;
   className: string;
 }) {
+  const pathname = usePathname();
   const navbarLinks = [
     {
       name: "Start new Interview",
       href: "/",
-      icon: <Home className="h-4 w-4" />,
+      icon: <Home className="h-6 w-6" />,
     },
     {
       name: "Interviews history",
       href: "/history",
-      icon: <History className="h-4 w-4" />,
+      icon: <History className="h-6 w-6" />,
     },
   ];
+  const isCurrentRoute = (navbarLink: any) => {
+    const isActive = pathname === navbarLink || navbarLink.startsWith(pathname);
+    return isActive;
+  };
 
   return (
     <div
       className={twMerge(
-        "grid overflow-hidden h-[100vh] w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]",
+        "grid overflow-hidden h-[100vh] w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr] bg-[#15191D]",
         className
       )}
     >
-      <div className="hidden border-r bg-[#F6F9F9] bgd-muted/40 md:block">
-        <div className="flex h-full max-h-screen flex-col gap-2">
-          <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
-            <Link href="/" className="flex items-center gap-2 font-semibold">
-              <Package2 className="h-6 w-6" />
+      <div className="hidden bgd-muted/40 md:block">
+        <div className="flex h-full max-h-screen flex-col gap-14">
+          <div className="flex h-14 items-center pt-6  px-4 lg:h-[60px] lg:px-6 text-2xl">
+            <Link
+              href="/"
+              className="flex items-center gap-4 font-semibold text-white"
+            >
+              <Package2 className="h-8 w-8" />
               <span className="">BehaveWise</span>
             </Link>
-            <Button variant="outline" size="icon" className="ml-auto h-8 w-8">
-              <Bell className="h-4 w-4" />
-              <span className="sr-only">Toggle notifications</span>
-            </Button>
           </div>
           <div className="flex-1">
-            <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
+            <nav className="grid items-start px-2 font-medium lg:px-4 gap-y-2">
               {navbarLinks.map(({ name, href, icon }) => (
                 <Link
                   key={name}
                   href={href}
-                  className="flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
+                  className={twMerge([
+                    "flex items-center gap-4 rounded-md px-3 py-2  text-[#AFB1B3] text-lg",
+                    isCurrentRoute(href)
+                      ? "bg-white text-[#15191D]"
+                      : "hover:text-white",
+                  ])}
                 >
                   {icon}
                   {name}
@@ -79,8 +90,10 @@ export function SidebarLayout({
           <div className="mt-auto p-4"></div>
         </div>
       </div>
-      <div className="flex flex-col h-full">
-        <header className="flex h-14 items-center gap-4 border-b bg-[#ECEFF3] px-4 lg:h-[60px] lg:px-6 ">
+      <div className="flex flex-col  border-black rounded-[4rem] p-5 pl-0">
+        <header className="flex h-20 items-center gap-4 pt-7 bg-[#ECEFF3] px-10 lg:h-[60px] lg:px-8 rounded-t-xl ">
+          <Headline>Interview Feedback</Headline>
+
           <Sheet>
             <SheetTrigger asChild>
               <Button
@@ -146,14 +159,16 @@ export function SidebarLayout({
               <Button
                 variant="secondary"
                 size="icon"
-                className="rounded-full relative overflow-hidden"
+                className="rounded-full relative"
               >
-                <Image
-                  className="h-5 w-5"
-                  src="/avatar.png"
-                  alt="Profile"
-                  fill
-                />
+                <Avatar className="w-14 h-14">
+                  <AvatarImage
+                    alt="@shadcn"
+                    src="/avatar.png"
+                    width={60}
+                    height={60}
+                  />
+                </Avatar>
                 <span className="sr-only">Toggle user menu</span>
               </Button>
             </DropdownMenuTrigger>
@@ -167,7 +182,7 @@ export function SidebarLayout({
             </DropdownMenuContent>
           </DropdownMenu>
         </header>
-        <main className="flex flex-1 flex-col gap-4 p-4 lg:agp-6 lg:p-6 bg-[#ECEFF3] overflow-y-scroll min-h-[100vh]">
+        <main className="flex flex-1 flex-col gap-4 p-4 lg:p-6 lg:pt-10 bg-[#ECEFF3]">
           {children}
         </main>
       </div>

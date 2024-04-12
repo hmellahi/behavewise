@@ -3,7 +3,7 @@ import { Answer } from "@prisma/client";
 export default function AnswerFeedbackDetails({ answer }: { answer: Answer }) {
   const { transcript, feedback } = answer;
   return (
-    <div className="bg-white rounded-b-lg p-6 border-[.4px] border-t-0 border-gray-300">
+    <div className="bg-white rounded-b-lg p-6 border-2 border-t-0 border-gray-300 !shadow-lg">
       <div>
         <h2 className="text-xl font-semibold text-left text-[#1D2B3A] mb-2">
           Transcript

@@ -28,7 +28,7 @@ export default async function OG() {
       >
         <img
           src="/apple-touch-icon.png"
-          alt="Liftoff Logo"
+          alt="behaveWise Logo"
           tw="w-20 h-20 mb-4 opacity-95"
         />
         <h1

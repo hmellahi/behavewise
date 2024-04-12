@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { CreateAnswerDto } from "@/types/interview";
 import answerService from "./answerService";
 import questionService from "./questionService";
+import { revalidatePath } from "next/cache";
 
 export const evaluateInterview = async (interviewId: string) => {
   await prisma.interview.update({
@@ -17,6 +18,8 @@ export const evaluateInterview = async (interviewId: string) => {
       }),
     },
   });
+
+  revalidatePath(`/interview/${interviewId}`);
 };
 
 async function saveAnswer(answer: CreateAnswerDto) {

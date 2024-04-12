@@ -1,12 +1,11 @@
 "use client";
 
+import Spinner from "@/components/svgs/Spinner";
 import Headline from "@/components/ui/Headline";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import CatLoader from "@/components/ui/loaders/catLoader";
 import { fetchInterviewFeedback } from "@/server-actions/interview/interview.actions";
 import { useEffect, useState } from "react";
 import { AnswersFeedback } from "./AnswersFeedback";
-import Spinner from "@/components/svgs/Spinner";
 export default function InterviewFeedback({
   initialInterviewData,
 }: {
@@ -45,18 +44,29 @@ export default function InterviewFeedback({
     );
   }
 
-
   // make a list of them..
   const weaknesses = [
     "Occasionally jumps between different topics and experiences, leading to a lack of clarity in responses",
     "Could work on providing more specific and concise answers to interview questions",
     "Salary expectation could be more research-based and tailored to the company and role",
-  ]
+  ];
 
+  const stenghts = [
+    "Candidate has relevant experience in software engineering and working on innovative projects",
+    "Demonstrates a proactive approach to learning and seeking feedback",
+    "Asks thoughtful questions about company culture and the ideal candidate for the position",
+  ];
+
+  const improvementSuggestions = [
+    // get them from this html..
+
+    "Practice structuring responses to provide clear and concise information",
+    "Research and align salary expectations with the industry standards and the specific company",
+    "Continue asking relevant and insightful questions, while also actively listening and engaging in conversation with the interviewer",
+  ];
 
   return (
-    <div className="h-full overflow-y-auto gap-6 flex flex-col">
-      <Headline>Interview Feedback</Headline>
+    <div className="h-[calc(100vh-8rem)] no-scrollbar overflow-y-scroll gap-6 flex flex-col">
 
       <AnswersFeedback answers={interview.answers} />
       <div className="max-w-5xl p-6 bg-white rounded-xl">
@@ -64,7 +74,7 @@ export default function InterviewFeedback({
           <Avatar>
             <AvatarImage
               alt="@shadcn"
-              src="https://github.com/shadcn.png"
+              src="/avatar.png"
               width={48}
               height={60}
             />
@@ -82,45 +92,33 @@ export default function InterviewFeedback({
           </div>
         </div>
         <div className="mt-4">
-          <h3 className="text-lg font-semibold">Strengths:</h3>
-          <ul className="list-disc pl-5 space-y-1 text-gray-700">
-            <li>
-              Candidate has relevant experience in software engineering and
-              working on innovative projects
-            </li>
-            <li>
-              Demonstrates a proactive approach to learning and seeking feedback
-            </li>
-            <li>
-              Asks thoughtful questions about company culture and the ideal
-              candidate for the position
-            </li>
-          </ul>
-        </div>
-        <div className="mt-4">
-          <h3 className="text-lg font-semibold">Weaknesses:</h3>
-          <ul className="list-disc pl-5 space-y-1 text-gray-700">
-            {weaknesses.map((weakness, index) => (
-              <li key={index} className="style-none">{weakness}</li>
+          <h3 className="text-lg font-medium	"> 💪 Strengths:</h3>
+          <ul className="list-disc pl-4 space-y-1 text-gray-700">
+            {stenghts.map((stength, index) => (
+              <li key={index} className="list-none">
+                - {stength}
+              </li>
             ))}
           </ul>
         </div>
         <div className="mt-4">
-          <h3 className="text-lg font-semibold">Improvement suggestions:</h3>
-          <ul className="list-disc pl-5 space-y-1 text-gray-700">
-            <li>
-              Practice structuring responses to provide clear and concise
-              information
-            </li>
-            <li>
-              Research and align salary expectations with the industry standards
-              and the specific company
-            </li>
-            <li>
-              Continue asking relevant and insightful questions, while also
-              actively listening and engaging in conversation with the
-              interviewer
-            </li>
+          <h3 className="text-lg font-medium	">📉 Weaknesses:</h3>
+          <ul className="list-disc pl-4 space-y-1 text-gray-700">
+            {weaknesses.map((weakness, index) => (
+              <li key={index} className="list-none">
+                - {weakness}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="mt-4">
+          <h3 className="text-lg font-medium	">🏋️‍♂️ Improvement suggestions:</h3>
+          <ul className="list-disc pl-4 space-y-1 text-gray-700">
+            {improvementSuggestions.map((improvement, index) => (
+              <li key={index} className="list-none">
+                - {improvement}
+              </li>
+            ))}
           </ul>
         </div>
       </div>

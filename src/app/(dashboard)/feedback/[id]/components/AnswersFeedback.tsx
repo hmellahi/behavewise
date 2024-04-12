@@ -25,6 +25,11 @@ export function AnswersFeedback({ answers }: { answers: Answer[] }) {
     10: "bg-green-700",
   };
 
+  const truncate = (str: string) => {
+    const max = 90;
+    return str.length > max ? str.slice(0, max) + "..." : str;
+  }
+
   return (
     <div className="max-w-5xl p-8 bg-white rounded-xl">
       <h3 className="text-2xl font-semibold mb-5">Answers Feedback</h3>
@@ -37,21 +42,23 @@ export function AnswersFeedback({ answers }: { answers: Answer[] }) {
           <AccordionItem
             value={answer.id}
             key={answer.id}
-            className="rounded-lg shadow-sm w-full"
+            className="rounded-lg w-full"
           >
-            <AccordionTrigger className="bg-muted/40 py-3 px-4 rounded-t-lg w-full">
+            <AccordionTrigger className="bg-[#ECEFF3] py-3 px-4 rounded-[1rem] w-full">
               <div className="flex justify-between w-full pr-5">
-                <h3 className="truncate w-[60%] text-left hover:underline">
-                  {answer.question.caption}
-                </h3>
-                <Badge
-                  className={`h-6 shrink-0 ${
-                    scoreToColor[answer.score]
-                  } hover:${scoreToColor[answer.score]}
+                <div className="basis-[80%] text-left hover:underline truncated overflow-hidden min-w-0">
+                  <p className="truncated w-[80%d] overflow-hidden">{truncate(answer.question.caption)}</p>
+                </div>
+                <div className="min-w-0 basis-[20%] text-right  shrink-0 overflow-hidden">
+                  <Badge
+                    className={`h-6 shrink-0 ${
+                      scoreToColor[answer.score]
+                    } hover:${scoreToColor[answer.score]}
                   `}
-                >
-                  {answer.score} / 10
-                </Badge>
+                  >
+                    {answer.score} / 10
+                  </Badge>
+                </div>
               </div>
               {/* </div> */}
             </AccordionTrigger>
