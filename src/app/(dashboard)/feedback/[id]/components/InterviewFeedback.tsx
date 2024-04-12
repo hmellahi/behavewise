@@ -3,6 +3,7 @@
 import Spinner from "@/components/svgs/Spinner";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { fetchInterviewFeedback } from "@/server-actions/interview/interview.actions";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { AnswersFeedback } from "./AnswersFeedback";
 export default function InterviewFeedback({
@@ -36,10 +37,11 @@ export default function InterviewFeedback({
         <h2 className="text-2xl font-semibold">
           BehaveWise is generating interview a report
         </h2>
-        <p>
-          You can check the results later on the <span>Interviews History</span>{" "}
-          page
-        </p>
+        {/* TODO */}
+        {/* <p> 
+          You can check the results later on the{" "}
+          <Link href="/history">Interviews History</Link> page
+        </p> */}
       </div>
     );
   }
@@ -86,7 +88,7 @@ export default function InterviewFeedback({
               AI hiring manager feedback
             </h2>
             <p className="mt-1 text-gray-700">
-              Feedback for the candidate's job interview:
+              Feedback for the candidate&apos;s job interview:
             </p>
           </div>
         </div>

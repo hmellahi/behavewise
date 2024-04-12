@@ -14,7 +14,7 @@ export default function PageWrapper({
 }) {
   return (
     <>
-      <Headline> {metadata?.title}</Headline>
+      <Headline> {metadata?.title as string}</Headline>
       <div
         className={twMerge(
           "h-[calc(100vh-7rem)] no-scrollbar overflow-y-scroll gap-6 flex flex-col pt-4",

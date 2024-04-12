@@ -1,5 +1,5 @@
-<a href="https://demo.useliftoff.com">
-  <img alt="Liftoff – AI-Powered Mock Interviews" src="https://demo.useliftoff.com/opengraph-image">
+<a href="https://mockinterview-ai.vercel.app/">
+  <img alt="BehaveWise – AI-Powered Mock Interviews" src="https://mockinterview-ai.vercel.app/opengraph-image">
   <h1 align="center">BehaveWise Interviews</h1>
 </a>
 
@@ -9,9 +9,9 @@
 
 <p align="center">
   <a href="https://twitter.com/hmellahiii">
-    <img src="https://img.shields.io/twitter/follow/tmeyer_me?style=flat&label=Follow&logo=twitter&color=0bf&logoColor=fff" alt="Tyler Meyer's follower count" />
+    <img src="https://img.shields.io/twitter/follow/tmeyer_me?style=flat&label=Follow&logo=twitter&color=0bf&logoColor=fff" alt="Tyler Meyer's follower count" /> 
   </a>
-  <a href="https://github.com/hmellahi/mockinterview-ai">
+  <a href="https://github.com/hmellahi/behavewise">
     <img src="https://img.shields.io/github/stars/hmellahi/behavewise?label=hmellahi/behavewise" alt="BehaveWise repo star count" />
   </a>
 </p>
@@ -29,8 +29,6 @@ BehaveWise is an interview preparation tool that provides AI feedback on your mo
 ## Tech Stack + Features
 
 ![Landing Page](https://ik.imagekit.io/9km72asqu/CleanShot_2023-05-31_at_12.43.54_svKkqF7dA.png?updatedAt=1685551454273)
-
-![Interview Selection](https://ik.imagekit.io/9km72asqu/CleanShot_2023-05-31_at_13.35.55_xohCRNMlJ.png?updatedAt=1685554576155)
 
 ### Frameworks
 

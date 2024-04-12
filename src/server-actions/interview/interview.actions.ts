@@ -1,8 +1,15 @@
+// @ts-nocheck
 "use server";
 
 import interviewQuestions from "@/app/(dashboard)/interview/[id]/constants/interviewQuestions";
+import { interviewQuestion } from "@/app/(dashboard)/interview/[id]/types/Interview";
 import { prisma } from "@/lib/prisma";
-import { Interview } from "@prisma/client";
+import { Answer, AnswerSchema, Interview } from "@prisma/client";
+
+interface Answer extends AnswerSchema {
+  question: interviewQuestion;
+  score: number;
+}
 
 export const startNewInterview = async (): Promise<Interview> => {
   const createdInterview = await prisma.interview.create({
@@ -23,7 +30,7 @@ export const fetchInterviewFeedback = async (interviewId: string) => {
 
   if (!interview) return null;
   // fetch answers
-  let answers = await prisma.answer.findMany({
+  let answers:Answer[] = await prisma.answer.findMany({
     where: {
       interviewId,
     },
@@ -36,7 +43,7 @@ export const fetchInterviewFeedback = async (interviewId: string) => {
     );
     // give a score from 1 to 10
     answer.score = Math.floor(Math.random() * 10);
-    return answer
+    return answer;
   });
   // answers.questionId -> value
 

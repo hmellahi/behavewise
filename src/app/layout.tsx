@@ -11,7 +11,7 @@ export const metadata: Metadata = {
       "behaveWise is an AI-powered mock interview platform that helps you practice for your next job interview.",
     images: [
       {
-        url: "https://demo.useliftoff.com/opengraph-image",
+        url: "https://behavewise.vercel.app/opengraph-image",
       },
     ],
   },
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     title: "behaveWise - AI-Powered Mock Interviews",
     description:
       "behaveWise is an AI-powered mock interview platform that helps you practice for your next job interview.",
-    images: ["https://demo.useliftoff.com/opengraph-image"],
+    images: ["https://behavewise.vercel.app/opengraph-image"],
     creator: "@Hmellahiii",
   },
   // metadataBase: new URL("https://demo.useliftoff.com"), TODO

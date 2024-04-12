@@ -47,20 +47,21 @@ export function AnswersFeedback({ answers }: { answers: Answer[] }) {
             <AccordionTrigger className="bg-[#ECEFF3] py-3 px-4 rounded-[1rem] w-full">
               <div className="flex justify-between w-full pr-5">
                 <div className="basis-[80%] text-left hover:underline truncated overflow-hidden min-w-0">
+                  {/* @ts-ignore */}
                   <p className="truncated w-[80%d] overflow-hidden">{truncate(answer.question.caption)}</p>
                 </div>
                 <div className="min-w-0 basis-[20%] text-right  shrink-0 overflow-hidden">
+                  {/* @ts-ignore */}
                   <Badge
-                    className={`h-6 shrink-0 ${
-                      scoreToColor[answer.score]
-                    } hover:${scoreToColor[answer.score]}
+                    //  @ts-ignore
+                    className={`h-6 shrink-0 ${scoreToColor[answer.score]} hover:${scoreToColor[answer.score]}
                   `}
                   >
+                  {/* @ts-ignore */}
                     {answer.score} / 10
                   </Badge>
                 </div>
               </div>
-              {/* </div> */}
             </AccordionTrigger>
             <AccordionContent>
               <AnswerFeedbackDetails answer={answer} />

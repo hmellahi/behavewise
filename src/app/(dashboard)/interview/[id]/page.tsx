@@ -1,6 +1,6 @@
+import InterviewPageContent from "@/app/(dashboard)/interview/[id]/components/InterviewPageContent";
 import PageWrapper from "@/components/ui/PageWrapper";
 import { Metadata } from "next";
-import InterviewPageContent from "./components/interviewPageContent";
 
 export const metadata: Metadata = {
   title: "Mock Interview",

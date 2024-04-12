@@ -1,4 +1,4 @@
-import { interviewQuestion } from "@/app/interview/[id]/types/Interview";
+import { interviewQuestion } from "@/app/(dashboard)/interview/[id]/types/Interview";
 import { OpenAIStream, OpenAIStreamPayload } from "@/utils/OpenAIStream";
 
 const preparePrompt = (question: interviewQuestion, answerScript: string) => {
