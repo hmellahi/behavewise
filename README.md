@@ -28,8 +28,6 @@ BehaveWise is an interview preparation tool that provides AI feedback on your mo
 
 ## Tech Stack + Features
 
-![Landing Page](https://ik.imagekit.io/9km72asqu/CleanShot_2023-05-31_at_12.43.54_svKkqF7dA.png?updatedAt=1685551454273)
-
 ### Frameworks
 
 - [Next.js](https://nextjs.org/) – React framework for building performant apps with the best developer experience
