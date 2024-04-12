@@ -1,6 +1,13 @@
 import { fetchInterviewFeedback } from "@/server-actions/interview/interview.actions";
+import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import InterviewFeedback from "./components/InterviewFeedback";
+import Headline from "@/components/ui/Headline";
+import PageWrapper from "@/components/ui/PageWrapper";
+
+export const metadata: Metadata = {
+  title: "Mock Interview Feedback",
+};
 
 export default async function Feedback({ params }: { params: { id: string } }) {
   const { id: interviewId } = params;
@@ -10,5 +17,9 @@ export default async function Feedback({ params }: { params: { id: string } }) {
     redirect("/");
   }
 
-  return <InterviewFeedback initialInterviewData={interview} />;
+  return (
+    <PageWrapper metadata={metadata}>
+      <InterviewFeedback initialInterviewData={interview} />
+    </PageWrapper>
+  );
 }

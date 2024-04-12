@@ -1,7 +1,6 @@
 "use client";
 
 import Spinner from "@/components/svgs/Spinner";
-import Headline from "@/components/ui/Headline";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { fetchInterviewFeedback } from "@/server-actions/interview/interview.actions";
 import { useEffect, useState } from "react";
@@ -22,6 +21,7 @@ export default function InterviewFeedback({
     const interval = setInterval(async () => {
       interview = await fetchInterviewFeedback(interview.id);
       setInterview({ ...interview });
+      console.log({ interview });
       if (interview?.status !== "IN_PROGRESS") {
         clearInterval(interval);
       }
@@ -66,8 +66,7 @@ export default function InterviewFeedback({
   ];
 
   return (
-    <div className="h-[calc(100vh-8rem)] no-scrollbar overflow-y-scroll gap-6 flex flex-col">
-
+    <>
       <AnswersFeedback answers={interview.answers} />
       <div className="max-w-5xl p-6 bg-white rounded-xl">
         <div className="flex items-start space-x-4">
@@ -122,6 +121,6 @@ export default function InterviewFeedback({
           </ul>
         </div>
       </div>
-    </div>
+    </>
   );
 }

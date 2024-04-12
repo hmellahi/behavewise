@@ -13,5 +13,10 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <SidebarLayout className={poppins.className}>{children}</SidebarLayout>;
+  return (
+    <SidebarLayout className={poppins.className}>
+      {/* {children} */}
+      {children}
+    </SidebarLayout>
+  );
 }

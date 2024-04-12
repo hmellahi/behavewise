@@ -9,7 +9,6 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-import Headline from "@/components/ui/Headline";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -22,8 +21,16 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { usePathname } from "next/navigation";
+import { createAndRedirectToInterview } from "@/utils/interview";
+import { usePathname, useRouter } from "next/navigation";
 import { twMerge } from "tailwind-merge";
+
+type navbarLink = {
+  name: string;
+  href: string;
+  icon: React.ReactNode;
+  handler?: () => void;
+};
 
 export function SidebarLayout({
   children,
@@ -33,11 +40,14 @@ export function SidebarLayout({
   className: string;
 }) {
   const pathname = usePathname();
-  const navbarLinks = [
+  const router = useRouter();
+
+  const navbarLinks: navbarLink[] = [
     {
       name: "Start new Interview",
-      href: "/",
       icon: <Home className="h-6 w-6" />,
+      handler: createAndRedirectToInterview,
+      href: "/interview",
     },
     {
       name: "Interviews history",
@@ -45,9 +55,17 @@ export function SidebarLayout({
       icon: <History className="h-6 w-6" />,
     },
   ];
-  const isCurrentRoute = (navbarLink: any) => {
-    const isActive = pathname === navbarLink || navbarLink.startsWith(pathname);
+  const isCurrentRoute = (link: string) => {
+    const isActive =
+      pathname === link || (pathname?.startsWith(link));
     return isActive;
+  };
+
+  const handleLink = (link: navbarLink) => {
+    if (link.handler) {
+      return link.handler();
+    }
+    router.push(link.href);
   };
 
   return (
@@ -70,21 +88,24 @@ export function SidebarLayout({
           </div>
           <div className="flex-1">
             <nav className="grid items-start px-2 font-medium lg:px-4 gap-y-2">
-              {navbarLinks.map(({ name, href, icon }) => (
-                <Link
-                  key={name}
-                  href={href}
-                  className={twMerge([
-                    "flex items-center gap-4 rounded-md px-3 py-2  text-[#AFB1B3] text-lg",
-                    isCurrentRoute(href)
-                      ? "bg-white text-[#15191D]"
-                      : "hover:text-white",
-                  ])}
-                >
-                  {icon}
-                  {name}
-                </Link>
-              ))}
+              {navbarLinks.map((link) => {
+                const { name, href, icon } = link;
+                return (
+                  <button
+                    key={name}
+                    className={twMerge([
+                      "flex items-center gap-4 rounded-md px-3 py-2  text-[#AFB1B3] text-lg",
+                      isCurrentRoute(href)
+                        ? "bg-white text-[#15191D]"
+                        : "hover:text-white",
+                    ])}
+                    onClick={() => handleLink(link)}
+                  >
+                    {icon}
+                    {name}
+                  </button>
+                );
+              })}
             </nav>
           </div>
           <div className="mt-auto p-4"></div>
@@ -92,8 +113,6 @@ export function SidebarLayout({
       </div>
       <div className="flex flex-col  border-black rounded-[4rem] p-5 pl-0">
         <header className="flex h-20 items-center gap-4 pt-7 bg-[#ECEFF3] px-10 lg:h-[60px] lg:px-8 rounded-t-xl ">
-          <Headline>Interview Feedback</Headline>
-
           <Sheet>
             <SheetTrigger asChild>
               <Button
@@ -183,7 +202,7 @@ export function SidebarLayout({
           </DropdownMenu>
         </header>
         <main className="flex flex-1 flex-col gap-4 p-4 lg:p-6 lg:pt-10 bg-[#ECEFF3]">
-          {children}
+          <div className="mt-[-4.5rem]">{children}</div>
         </main>
       </div>
     </div>

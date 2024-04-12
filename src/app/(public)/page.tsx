@@ -1,7 +1,7 @@
 "use client";
 
 import { gradient } from "@/components/ui/Gradient";
-import * as interviewActions from "@/server-actions/interview/interview.actions";
+import { createAndRedirectToInterview } from "@/utils/interview";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { useEffect } from "react";
@@ -10,11 +10,6 @@ export default function Home() {
   useEffect(() => {
     gradient.initGradient("#gradient-canvas");
   }, []);
-
-  const createAndRedirectToInterview = async () => {
-    const createdInterview = await interviewActions.startNewInterview();
-    window.location.href = `/interview/${createdInterview.id} `;
-  };
 
   return (
     <AnimatePresence>

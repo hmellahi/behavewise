@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useEffect, useState } from "react";
 import Webcam from "react-webcam";
 import { interviewQuestion } from "../types/Interview";
@@ -37,7 +36,7 @@ export default function InterviewContainer({
     : { width: 480, height: 640, facingMode: "user" };
 
   return (
-    <div className="relative z-10 h-full w-full rounded-lg">
+    <div className="relative z-10 h-full w-full rounded-[3rem]">
       <Timer seconds={seconds} />
       <InterviewerVideo
         onVideoEnded={() => setVideoEnded(true)}

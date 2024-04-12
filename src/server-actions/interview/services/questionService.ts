@@ -1,4 +1,4 @@
-import interviewQuestions from "@/app/interview/[id]/constants/interviewQuestions";
+import interviewQuestions from "@/app/(dashboard)/interview/[id]/constants/interviewQuestions";
 
 const getQuestionById = (questionId: string) => {
   const question = interviewQuestions.find(

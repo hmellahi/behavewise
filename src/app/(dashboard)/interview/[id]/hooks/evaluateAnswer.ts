@@ -10,11 +10,11 @@ const useEvaluateAnswer = () => {
   const evaluateAnswer = async ({
     recordedChunks,
     question,
-    interviewId
+    interviewId,
   }: {
     recordedChunks: Blob[];
     question: interviewQuestion;
-    interviewId:string
+    interviewId: string;
   }) => {
     if (!recordedChunks.length) {
       return;
@@ -65,13 +65,13 @@ const useEvaluateAnswer = () => {
 
     setStatus("Transcribing");
 
-    const upload = await fetch(`/api/submit-answer`, {
+    fetch(`/api/submit-answer`, {
       method: "POST",
       body: formData,
     });
 
-    const results = await upload.json();
-    console.log({ r: results });
+    // const results = await upload.json();
+    // console.log({ r: results });
   };
 
   return { evaluateAnswer, status, setStatus };
