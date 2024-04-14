@@ -2,6 +2,7 @@ import { ThemeProvider } from "@/components/contexts/theme-provider";
 import "@/styles/globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import { Metadata } from "next";
+import { Poppins } from "next/font/google";
 
 export const metadata: Metadata = {
   title: "behaveWise - AI-Powered Mock Interviews",
@@ -24,10 +25,15 @@ export const metadata: Metadata = {
     creator: "@Hmellahiii",
   },
   metadataBase: new URL("https://behavewise.vercel.app/opengraph-image"),
-  themeColor: "#FFF",
   description:
     "behaveWise is an AI-powered mock interview platform that helps you practice for your next job interview.",
 };
+
+// If loading a variable font, you don't need to specify the font weight
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+});
 
 export default async function RootLayout({
   children,
@@ -43,7 +49,7 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <div className={poppins.className}>{children}</div>
         </ThemeProvider>
         <Analytics />
       </body>
