@@ -59,7 +59,6 @@ const useEvaluateAnswer = () => {
 
     const formData = new FormData();
     formData.append("file", output, `${unique_id}.mp3`);
-    formData.append("model", "whisper-1");
     formData.append("questionId", question.id.toString());
     formData.append("interviewId", interviewId);
 

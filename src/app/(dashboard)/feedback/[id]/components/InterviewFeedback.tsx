@@ -4,7 +4,7 @@ import Spinner from "@/components/svgs/Spinner";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { fetchInterviewFeedback } from "@/server-actions/interview/interview.actions";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnswersFeedback } from "./AnswersFeedback";
 export default function InterviewFeedback({
   initialInterviewData,
@@ -12,8 +12,11 @@ export default function InterviewFeedback({
   initialInterviewData: any;
 }) {
   let [interview, setInterview] = useState(initialInterviewData);
+  const timer = useRef(0);
+  console.log({ interview });
+
   useEffect(() => {
-    if (interview?.status !== "IN_PROGRESS") {
+    if (interview?.status === "COMPLETED") {
       return;
     }
     // each 1 seconds fetch the feedback
@@ -23,13 +26,14 @@ export default function InterviewFeedback({
       interview = await fetchInterviewFeedback(interview.id);
       setInterview({ ...interview });
       console.log({ interview });
-      if (interview?.status !== "IN_PROGRESS") {
+      if (timer.current === 30 || interview?.status !== "IN_PROGRESS") {
         clearInterval(interval);
       }
+      timer.current += 1
     }, 1000);
   });
 
-  if (!interview) {
+  if (interview?.status !== "COMPLETED") {
     return (
       <div className="flex justify-center items-center h-full flex-col gap-4 mb-[4rem]">
         {/* <CatLoader width={400} height={400} /> */}

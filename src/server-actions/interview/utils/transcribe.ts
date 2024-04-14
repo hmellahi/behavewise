@@ -27,7 +27,7 @@ const transcribe = async (videoFile:any) => {
   });
 
   if (response?.data?.results[0]?.flagged) {
-    throw new Error("Inappropriate content detected. Please try again.");
+    // throw new Error("Inappropriate content detected. Please try again.");
   }
 
   return { transcript };

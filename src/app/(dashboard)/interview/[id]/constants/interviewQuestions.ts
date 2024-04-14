@@ -4,7 +4,7 @@ const interviewQuestions: interviewQuestion[] = [
   {
     id: "2",
     videoUrl:
-      "https://res.cloudinary.com/dv2xxj5vi/video/upload/v1712204779/interview/todpa1qrqw1nyz2522q9.mp4",
+      "https://res.cloudinary.com/dv2xxj5vi/video/upload/v1713049246/interview/tx8n35le99lt1d33ohzp.mp4",
     caption:
       "Tell me about yourself. Why don't you walk me through your resume?",
     prompt:

@@ -57,7 +57,7 @@ export default function Home() {
             className="relative md:ml-[-10px] md:mb-[37px] font-extrabold text-[16vw] md:text-[130px] font-inter text-[#1E2B3A] leading-[0.9] tracking-[-2px] z-[100]"
           >
             ACE your <br />
-            Behavioral <span className="text-[#407BBF]">Interviews</span>
+             Job <span className="text-[#407BBF]">Interviews</span>
             {/* <span className="font-inter text-[#407BBF]">.</span> */}
           </motion.h1>
           <motion.div
@@ -80,13 +80,7 @@ export default function Home() {
               </p>
             </div>
             <div className="w-1/2">
-              <h2 className="flex items-center font-semibold text-[1em] text-[#1a2b3b]">
-                Community
-              </h2>
-              <p className="text-[14px] leading-[20px] text-[#1a2b3b] font-normal">
-                Join a community of like-minded individuals, and learn from each
-                other.
-              </p>
+  
             </div>
           </motion.div>
 

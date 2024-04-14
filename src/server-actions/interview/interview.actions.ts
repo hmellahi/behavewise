@@ -11,9 +11,10 @@ interface Answer extends AnswerSchema {
   score: number;
 }
 
-export const startNewInterview = async (): Promise<Interview> => {
+export const createInterview = async (interviewId): Promise<Interview> => {
   const createdInterview = await prisma.interview.create({
     data: {
+      id: interviewId,
       status: "IN_PROGRESS",
       result: JSON.stringify({}),
     },

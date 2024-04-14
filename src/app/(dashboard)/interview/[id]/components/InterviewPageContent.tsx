@@ -100,10 +100,11 @@ export default function InterviewPageContent({
         SubmitAnswer();
       }
     }
+
     return () => {
       clearInterval(timer);
     };
-  });
+  }, [capturing, seconds]);
 
   const SubmitAnswer = async () => {
     // move to next question
@@ -128,7 +129,7 @@ export default function InterviewPageContent({
     }
 
     if (isLastQuestion) {
-      router.push("/feedback/" + interviewId);
+      return router.push("/feedback/" + interviewId);
     }
 
     setSubmitting(false);
@@ -141,6 +142,7 @@ export default function InterviewPageContent({
       return;
     }
     vidRef.current?.load();
+    
     handleStartCaptureClick();
   }, [currentQuestionIndex]);
 
@@ -163,10 +165,7 @@ export default function InterviewPageContent({
   };
 
   const currentQuestion = interviewQuestions[currentQuestionIndex];
-
-  if (!currentQuestion) {
-    return <div></div>;
-  }
+  const canStopRecording = seconds < QUESTION_TIME_LIMIT - 1;
 
   return (
     <AnimatePresence>
@@ -206,6 +205,7 @@ export default function InterviewPageContent({
                     handleStopCaptureClick={handleStopCaptureClick}
                     SubmitAnswer={SubmitAnswer}
                     restartVideo={restartVideo}
+                    canStopRecording={canStopRecording}
                   />
                 )}
                 <CountDown />

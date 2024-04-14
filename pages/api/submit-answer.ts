@@ -47,12 +47,14 @@ export default async function handler(
     const { transcript } = await transcribe(file);
 
     const feedback = await evaluateAnswer(question, transcript);
+    // const transcript = 'hello';
+    // const feedback = {'s': 'hello'};
 
     await interviewService.saveAnswer({
       audioUrl: file?.path, // TODO change
       transcript,
       feedback,
-      userId: null, // todo change
+      userId: null, // TODO change
       interviewId,
       questionId,
     })

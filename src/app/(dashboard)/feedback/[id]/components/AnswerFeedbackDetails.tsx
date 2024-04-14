@@ -19,7 +19,7 @@ export default function AnswerFeedbackDetails({ answer }: { answer: Answer }) {
           Feedback
         </h2>
         <div className="mt-4 text-sm flex gap-2.5 rounded-lg border border-[#EEEEEE] bg-[#FAFAFA] p-4 leading-6 text-gray-900 min-h-[100px] shadow-sm justify-between">
-          <p className="prose prose-sm max-w-none">{JSON.parse(feedback as string)}</p>
+          <p className="prose prose-sm max-w-none">{JSON.parse(feedback)}</p>
         </div>
       </div>
     </div>

@@ -11,6 +11,7 @@ interface VideoActionsProps {
   capturing: boolean;
   handleStartCaptureClick: () => void;
   handleStopCaptureClick: () => void;
+  canStopRecording: boolean;
 }
 
 export default function VideoActions({
@@ -22,6 +23,7 @@ export default function VideoActions({
   capturing,
   handleStartCaptureClick,
   handleStopCaptureClick,
+  canStopRecording,
 }: Readonly<VideoActionsProps>) {
   return (
     <div className="absolute bottom-0 left-0 z-50 flex h-[82px] w-full items-center justify-center">
@@ -39,6 +41,7 @@ export default function VideoActions({
           capturing={capturing}
           handleStartCaptureClick={handleStartCaptureClick}
           handleStopCaptureClick={handleStopCaptureClick}
+          canStopRecording={canStopRecording}
         />
       )}
     </div>

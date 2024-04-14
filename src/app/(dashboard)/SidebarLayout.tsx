@@ -6,23 +6,17 @@ import {
   Package,
   Package2,
   ShoppingCart,
+  Video,
 } from "lucide-react";
 import Link from "next/link";
 
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { ComingSoonModal } from "@/components/ui/modals/ComingSoonModal";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { createAndRedirectToInterview } from "@/utils/interview";
 import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 type navbarLink = {
@@ -30,6 +24,7 @@ type navbarLink = {
   href: string;
   icon: React.ReactNode;
   handler?: () => void;
+  isComingSoon?: boolean;
 };
 
 export function SidebarLayout({
@@ -45,7 +40,7 @@ export function SidebarLayout({
   const navbarLinks: navbarLink[] = [
     {
       name: "Start new Interview",
-      icon: <Home className="h-6 w-6" />,
+      icon: <Video className="h-6 w-6" />,
       handler: createAndRedirectToInterview,
       href: "/interview",
     },
@@ -53,20 +48,27 @@ export function SidebarLayout({
       name: "Interviews history",
       href: "/history",
       icon: <History className="h-6 w-6" />,
+      isComingSoon: true,
     },
   ];
   const isCurrentRoute = (link: string) => {
-    const isActive =
-      pathname === link || (pathname?.startsWith(link));
+    const isActive = pathname === link || pathname?.startsWith(link);
     return isActive;
   };
 
   const handleLink = (link: navbarLink) => {
+    // same url? don't do nothing
+    if (pathname?.startsWith(link.href)) return;
+    if (link.isComingSoon) {
+      return setIsComingSoonModalOpen(true);
+    }
     if (link.handler) {
       return link.handler();
     }
     router.push(link.href);
   };
+
+  const [isComingSoonModalOpen, setIsComingSoonModalOpen] = useState(false);
 
   return (
     <div
@@ -173,7 +175,7 @@ export function SidebarLayout({
               </div>
             </form> */}
           </div>
-          <DropdownMenu>
+          {/* <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
                 variant="secondary"
@@ -199,7 +201,11 @@ export function SidebarLayout({
               <DropdownMenuSeparator />
               <DropdownMenuItem>Logout</DropdownMenuItem>
             </DropdownMenuContent>
-          </DropdownMenu>
+          </DropdownMenu> */}
+          <ComingSoonModal
+            open={isComingSoonModalOpen}
+            onOpenChange={setIsComingSoonModalOpen}
+          />
         </header>
         <main className="flex flex-1 flex-col gap-4 p-4 lg:p-6 lg:pt-10 bg-[#ECEFF3]">
           <div className="mt-[-4.5rem]">{children}</div>
