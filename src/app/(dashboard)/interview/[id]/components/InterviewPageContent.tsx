@@ -13,6 +13,7 @@ import LoadingState from "./LoadingState";
 import NoCameraAccess from "./NoCameraAccess";
 import VideoActions from "./VideoAction";
 import LinearTranslationAnimation from "./animations/LinearTranslationAnimation";
+import VideoNotStoredDisclaimer from "./VideoNotStoredDisclaimer";
 
 export default function InterviewPageContent({
   params,
@@ -210,7 +211,7 @@ export default function InterviewPageContent({
                 )}
                 <CountDown />
               </LinearTranslationAnimation>
-              {/* <VideoNotStoredDisclaimer /> */}
+              <VideoNotStoredDisclaimer />
             </div>
           ) : (
             <NoCameraAccess />
