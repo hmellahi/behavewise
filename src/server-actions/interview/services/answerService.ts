@@ -62,9 +62,9 @@ const fetchAnswers = async (interviewId: string, withQuestions = false) => {
     
     where: {
       interviewId,
-      NOT:{
-        questionId : "3" // TODO  remove this
-      }
+      // NOT:{
+      //   questionId : "3" // TODO  remove this
+      // }
     },
   });
 
