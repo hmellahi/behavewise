@@ -100,7 +100,7 @@ export default function InterviewFeedback({
         <div className="mt-4">
           <h3 className="text-lg font-medium	">🏋️‍♂️ Improvement suggestions:</h3>
           <ul className="list-disc pl-4 space-y-1 text-gray-700">
-            {improvementSuggestions.map((improvement, index) => (
+            {improvementSuggestions.map((improvement:string, index:number) => (
               <li key={index} className="list-none">
                 - {improvement}
               </li>
