@@ -50,29 +50,7 @@ export default function InterviewFeedback({
   }
 
   const { result } = interview;
-  console.log({s: JSON.parse(result)})
   const { strengths, weaknesses, improvementSuggestions } = JSON.parse(result);
-
-  // make a list of them..
-  // const weaknesses = [
-  //   "Occasionally jumps between different topics and experiences, leading to a lack of clarity in responses",
-  //   "Could work on providing more specific and concise answers to interview questions",
-  //   "Salary expectation could be more research-based and tailored to the company and role",
-  // ];
-
-  // const strengths = [
-  //   "Candidate has relevant experience in software engineering and working on innovative projects",
-  //   "Demonstrates a proactive approach to learning and seeking feedback",
-  //   "Asks thoughtful questions about company culture and the ideal candidate for the position",
-  // ];
-
-  // const improvementSuggestions = [
-  //   // get them from this html..
-
-  //   "Practice structuring responses to provide clear and concise information",
-  //   "Research and align salary expectations with the industry standards and the specific company",
-  //   "Continue asking relevant and insightful questions, while also actively listening and engaging in conversation with the interviewer",
-  // ];
 
   return (
     <>
