@@ -52,14 +52,12 @@ export function AnswersFeedback({ answers }: { answers: Answer[] }) {
                 </div>
                 <div className="min-w-0 basis-[20%] text-right  shrink-0 overflow-hidden">
                   {/* @ts-ignore */}
-                  <Badge
-                    //  @ts-ignore
+                  {/* <Badge
                     className={`h-6 shrink-0 ${scoreToColor[answer.score]} hover:${scoreToColor[answer.score]}
                   `}
                   >
-                  {/* @ts-ignore */}
                     {answer.score} / 10
-                  </Badge>
+                  </Badge> */}
                 </div>
               </div>
             </AccordionTrigger>

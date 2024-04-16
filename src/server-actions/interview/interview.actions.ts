@@ -42,9 +42,6 @@ export const fetchInterviewFeedback = async (interviewId: string) => {
     answer.question = interviewQuestions.find(
       (question) => question.id === answer.questionId
     );
-    // give a score from 1 to 10
-    answer.score = Math.floor(Math.random() * 10);
-    return answer;
   });
   // answers.questionId -> value
 
