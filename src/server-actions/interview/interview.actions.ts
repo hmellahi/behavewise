@@ -5,6 +5,7 @@ import interviewQuestions from "@/app/(dashboard)/interview/[id]/constants/inter
 import { interviewQuestion } from "@/app/(dashboard)/interview/[id]/types/Interview";
 import { prisma } from "@/lib/prisma";
 import { Answer, AnswerSchema, Interview } from "@prisma/client";
+import answerService from "./services/answerService";
 
 interface Answer extends AnswerSchema {
   question: interviewQuestion;
@@ -31,18 +32,7 @@ export const fetchInterviewFeedback = async (interviewId: string) => {
 
   if (!interview) return null;
   // fetch answers
-  let answers:Answer[] = await prisma.answer.findMany({
-    where: {
-      interviewId,
-    },
-  });
-  // interviewQuestions
-  // map the interviewQuestions with answers questionid...
-  answers = answers.map((answer) => {
-    answer.question = interviewQuestions.find(
-      (question) => question.id === answer.questionId
-    );
-  });
+  let answers = await answerService.fetchAnswers(interviewId);
   // answers.questionId -> value
 
   return {

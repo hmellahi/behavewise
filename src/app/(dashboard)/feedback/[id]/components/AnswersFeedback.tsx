@@ -29,6 +29,7 @@ export function AnswersFeedback({ answers }: { answers: Answer[] }) {
     const max = 90;
     return str.length > max ? str.slice(0, max) + "..." : str;
   }
+  
 
   return (
     <div className="max-w-5xl p-8 bg-white rounded-xl">
