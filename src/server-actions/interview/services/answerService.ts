@@ -1,3 +1,4 @@
+import interviewQuestions from "@/app/(dashboard)/interview/[id]/constants/interviewQuestions";
 import { prisma } from "@/lib/prisma";
 import { CreateAnswerDto } from "@/types/interview";
 
@@ -56,9 +57,33 @@ const countAnswers = (interviewId: string) => {
   });
 };
 
+const fetchAnswers = async (interviewId: string, withQuestions = false) => {
+  let answers = await prisma.answer.findMany({
+    
+    where: {
+      interviewId,
+      NOT:{
+        questionId : "3" // TODO  remove this
+      }
+    },
+  });
+
+  // @ts-ignore
+  answers = answers.map((answer) => {
+  // @ts-ignore
+    answer.question = interviewQuestions.find(
+      (question) => question.id === answer.questionId
+    );
+    return answer
+  });
+  
+  return answers;
+};
+
 const answerService = {
   save,
   countAnswers,
+  fetchAnswers,
 };
 
 export default answerService;

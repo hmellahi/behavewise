@@ -3,7 +3,6 @@
 import Spinner from "@/components/svgs/Spinner";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { fetchInterviewFeedback } from "@/server-actions/interview/interview.actions";
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { AnswersFeedback } from "./AnswersFeedback";
 export default function InterviewFeedback({
@@ -29,7 +28,7 @@ export default function InterviewFeedback({
       if (timer.current === 30 || interview?.status !== "IN_PROGRESS") {
         clearInterval(interval);
       }
-      timer.current += 1
+      timer.current += 1;
     }, 1000);
   });
 
@@ -50,26 +49,30 @@ export default function InterviewFeedback({
     );
   }
 
+  const { result } = interview;
+  console.log({s: JSON.parse(result)})
+  const { strengths, weaknesses, improvementSuggestions } = JSON.parse(result);
+
   // make a list of them..
-  const weaknesses = [
-    "Occasionally jumps between different topics and experiences, leading to a lack of clarity in responses",
-    "Could work on providing more specific and concise answers to interview questions",
-    "Salary expectation could be more research-based and tailored to the company and role",
-  ];
+  // const weaknesses = [
+  //   "Occasionally jumps between different topics and experiences, leading to a lack of clarity in responses",
+  //   "Could work on providing more specific and concise answers to interview questions",
+  //   "Salary expectation could be more research-based and tailored to the company and role",
+  // ];
 
-  const stenghts = [
-    "Candidate has relevant experience in software engineering and working on innovative projects",
-    "Demonstrates a proactive approach to learning and seeking feedback",
-    "Asks thoughtful questions about company culture and the ideal candidate for the position",
-  ];
+  // const strengths = [
+  //   "Candidate has relevant experience in software engineering and working on innovative projects",
+  //   "Demonstrates a proactive approach to learning and seeking feedback",
+  //   "Asks thoughtful questions about company culture and the ideal candidate for the position",
+  // ];
 
-  const improvementSuggestions = [
-    // get them from this html..
+  // const improvementSuggestions = [
+  //   // get them from this html..
 
-    "Practice structuring responses to provide clear and concise information",
-    "Research and align salary expectations with the industry standards and the specific company",
-    "Continue asking relevant and insightful questions, while also actively listening and engaging in conversation with the interviewer",
-  ];
+  //   "Practice structuring responses to provide clear and concise information",
+  //   "Research and align salary expectations with the industry standards and the specific company",
+  //   "Continue asking relevant and insightful questions, while also actively listening and engaging in conversation with the interviewer",
+  // ];
 
   return (
     <>
@@ -99,7 +102,7 @@ export default function InterviewFeedback({
         <div className="mt-4">
           <h3 className="text-lg font-medium	"> 💪 Strengths:</h3>
           <ul className="list-disc pl-4 space-y-1 text-gray-700">
-            {stenghts.map((stength, index) => (
+            {strengths.map((stength, index) => (
               <li key={index} className="list-none">
                 - {stength}
               </li>
