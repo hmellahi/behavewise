@@ -80,7 +80,7 @@ export default function InterviewFeedback({
         <div className="mt-4">
           <h3 className="text-lg font-medium	"> 💪 Strengths:</h3>
           <ul className="list-disc pl-4 space-y-1 text-gray-700">
-            {strengths.map((stength, index) => (
+            {strengths.map((stength:string, index:number) => (
               <li key={index} className="list-none">
                 - {stength}
               </li>
@@ -90,7 +90,7 @@ export default function InterviewFeedback({
         <div className="mt-4">
           <h3 className="text-lg font-medium	">📉 Weaknesses:</h3>
           <ul className="list-disc pl-4 space-y-1 text-gray-700">
-            {weaknesses.map((weakness, index) => (
+            {weaknesses.map((weakness:string, index:number) => (
               <li key={index} className="list-none">
                 - {weakness}
               </li>
