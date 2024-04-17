@@ -9,7 +9,6 @@ const transcribe = async (videoFile:any) => {
   });
   const openai = new OpenAIApi(configuration);
 
-  console.log({videoFile});
   const videoFilePath = videoFile?.filepath;
 
   const resp = await openai.createTranscription(

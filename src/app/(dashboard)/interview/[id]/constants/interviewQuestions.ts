@@ -17,7 +17,7 @@ const interviewQuestions: interviewQuestion[] = [
     caption:
       "What’s an example of a difficult problem you solved? Be specific about how the problem was diagnosed and your process for approaching it.",
     prompt:
-      "Please also give feedback on the candidate's communication skills. Make sure their response is structured (perhaps using the STAR or PAR frameworks).",
+      "Please also give feedback on the candidate's communication skills.",
   },
   {
     id: "3",
@@ -25,7 +25,7 @@ const interviewQuestions: interviewQuestion[] = [
       "https://res.cloudinary.com/dv2xxj5vi/video/upload/v1712201664/interview/ypzwd3hdffkrxs4qox7q.mp4",
     caption: "So, why are you interested in joining our company?",
     prompt:
-      "Please also give feedback on the candidate's communication skills. Make sure their response is structured (perhaps using the STAR or PAR frameworks).",
+      "Please also give feedback on the candidate's communication skills.",
   },
 ];
 

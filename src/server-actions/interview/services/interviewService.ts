@@ -33,29 +33,25 @@ export const evaluateInterview = async (interviewId: string) => {
   };
 
   try {
-    console.log(interviewId)
     const feedback = await OpenAIStream(payload);
 
+    const updatedInterview = await prisma.interview.update({
+      where: {
+        id: interviewId,
+      },
+      data: {
+        status: "COMPLETED",
+        result: feedback,
+      },
+    });
+    console.log({ updatedInterview });
 
+    revalidatePath(`/interview/${interviewId}`);
 
-  const updatedInterview = await prisma.interview.update({
-    where: {
-      id: interviewId,
-    },
-    data: {
-      status: "COMPLETED",
-      result: feedback,
-    },
-  });
-  console.log({updatedInterview})
-
-
-  revalidatePath(`/interview/${interviewId}`);
-
-  return updatedInterview;
-}catch(e){
-  console.log({e})
-}
+    return updatedInterview;
+  } catch (e) {
+    console.log({ e });
+  }
 };
 
 async function saveAnswer(answer: CreateAnswerDto) {

@@ -1,6 +1,5 @@
-import { evaluateInterview } from "@/server-actions/interview/services/interviewService";
+import interviewQuestions from "@/app/(dashboard)/interview/[id]/constants/interviewQuestions";
 import evaluateAnswer from "@/server-actions/interview/utils/evaluateAnswer";
-import { generateEvalPrompt } from "@/server-actions/interview/utils/generateEvalPrompt";
 
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -13,9 +12,19 @@ export default async function handler(
 ) {
   try {
     // get id param
-    const { query: { id } } = request;
+    const {
+      body: { questionId, answer },
+    } = request;
 
-    let result = await evaluateInterview(id as string);
+    const question = interviewQuestions.find((q) => q.id === questionId);
+
+    if (!question || !answer) {
+        return res.status(500).json({
+            'wtf':'s'
+        });
+    }
+
+    let result = await evaluateAnswer(question, answer as string);
     res.status(200).json({
       result,
     });

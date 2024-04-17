@@ -31,12 +31,14 @@ export const fetchInterviewFeedback = async (interviewId: string) => {
   });
 
   if (!interview) return null;
+  const result = JSON.parse(interview.result)
   // fetch answers
   let answers = await answerService.fetchAnswers(interviewId);
   // answers.questionId -> value
 
   return {
     ...interview,
+    result,
     answers,
   };
 };

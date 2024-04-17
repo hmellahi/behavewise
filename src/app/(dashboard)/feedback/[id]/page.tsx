@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default async function Feedback({ params }: { params: { id: string } }) {
   const { id: interviewId } = params;
   const interview = await fetchInterviewFeedback(interviewId);
-  console.log(interview);
+
   if (!interview) {
     redirect("/");
   }

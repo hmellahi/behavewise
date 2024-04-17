@@ -28,7 +28,7 @@ async function save({
       },
       data: {
         transcript,
-        feedback: JSON.stringify(feedback),
+        feedback,
       },
     });
   } else {
@@ -36,7 +36,7 @@ async function save({
       // audioUrl,
       data: {
         transcript,
-        feedback: JSON.stringify(feedback),
+        feedback,
         interviewId,
         userId,
         questionId,
@@ -74,6 +74,8 @@ const fetchAnswers = async (interviewId: string, withQuestions = false) => {
     answer.question = interviewQuestions.find(
       (question) => question.id === answer.questionId
     );
+    // @ts-ignore
+    answer.feedback = JSON.parse(answer.feedback);
     return answer
   });
   

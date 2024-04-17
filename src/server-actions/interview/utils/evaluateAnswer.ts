@@ -2,7 +2,12 @@ import { interviewQuestion } from "@/app/(dashboard)/interview/[id]/types/Interv
 import { OpenAIStream, OpenAIStreamPayload } from "@/utils/OpenAIStream";
 
 const preparePrompt = (question: interviewQuestion, answerScript: string) => {
-  const prompt = `Please give feedback on the following interview question: ${question.caption} given the following transcript: ${answerScript}. ${question.prompt} \n\n\ Feedback on the candidate's response:`;
+  const prompt = `Please give feedback on the following interview question: ${question.caption} given the following transcript: ${answerScript} also give a score from 0 to 10. ${question.prompt} \n\n\ The feedback must be in this format (json):
+  {
+    "score": 7,
+    "message": "good"
+  }
+  `;
 
   return prompt;
 };

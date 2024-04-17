@@ -28,11 +28,20 @@ export function AnswersFeedback({ answers }: { answers: Answer[] }) {
   const truncate = (str: string) => {
     const max = 90;
     return str.length > max ? str.slice(0, max) + "..." : str;
+  };
+
+  const getAnswerScore = (answer: Answer) => {
+    // @ts-ignore
+    return answer.feedback.score;
+  };
+
+  const getAnswerScoreClass = (answer: Answer) => {
+    // @ts-ignore
+    return scoreToColor[getAnswerScore(answer)]
   }
-  
 
   return (
-    <div className="max-w-5xl p-8 bg-white rounded-xl">
+    <div className="max-w-6xl p-8 bg-white rounded-xl">
       <h3 className="text-2xl font-semibold mb-5">Answers Feedback</h3>
       <Accordion
         type="single"
@@ -49,16 +58,21 @@ export function AnswersFeedback({ answers }: { answers: Answer[] }) {
               <div className="flex justify-between w-full pr-5">
                 <div className="basis-[80%] text-left hover:underline truncated overflow-hidden min-w-0">
                   {/* @ts-ignore */}
-                  <p className="truncated w-[80%d] overflow-hidden">{truncate(answer.question.caption)}</p>
+                  <p className="truncated w-[80%d] overflow-hidden">
+                    {truncate(answer.question.caption)}
+                  </p>
                 </div>
-                <div className="min-w-0 basis-[20%] text-right  shrink-0 overflow-hidden">
-                  {/* @ts-ignore */}
-                  {/* <Badge
-                    className={`h-6 shrink-0 ${scoreToColor[answer.score]} hover:${scoreToColor[answer.score]}
+                <div className="min-w-0 basis-[20%] text-right  shrink-0 overflow-hidden text-black">
+                  {answer.score}
+                  <Badge
+                    // @ts-ignore
+                    className={`h-6 shrink-0 ${
+                      getAnswerScoreClass(answer)
+                    } hover:${getAnswerScoreClass(answer)}
                   `}
                   >
-                    {answer.score} / 10
-                  </Badge> */}
+                    {getAnswerScore(answer)} / 10
+                  </Badge>
                 </div>
               </div>
             </AccordionTrigger>

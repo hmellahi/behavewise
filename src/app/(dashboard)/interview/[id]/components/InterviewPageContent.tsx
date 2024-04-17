@@ -113,11 +113,6 @@ export default function InterviewPageContent({
       currentQuestionIndex + 1 === interviewQuestions.length;
 
     setSubmitting(true);
-    console.log({
-      isLastQuestion,
-      currentQuestionIndex,
-      i: interviewQuestions.length,
-    });
 
     try {
       await evaluateAnswer({

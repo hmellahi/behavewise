@@ -16,7 +16,7 @@ function generateAnswersSummary(answers: Answer[]) {
 
 const answers = [
   {
-    id:"2",
+    id: "2",
     question:
       "Tell me about yourself. Why don't you walk me through your resume?",
     conditions:
@@ -32,7 +32,7 @@ const answers = [
     During my spare time, I was part of the founding team of Fileqa, a platform that instantly provides users with insights from documents, and we managed to have more than 100 users after our launch.`,
   },
   {
-    id : "1",
+    id: "1",
     question:
       "What’s an example of a difficult problem you solved? Be specific about how the problem was diagnosed and your process for approaching it.",
     answer: `
@@ -52,17 +52,19 @@ export const generateEvalPrompt = async (interviewId: string) => {
   
   ${answersSummary}
    
-   Evaluate the condidate answers like this example (in this example all answers are merged into one report, do the same) and give to me in the same format in json (like below)
+   Evaluate the condidate answers like this example (in this example all answers are merged into one report, do the same, also add a global score from 0% to 100%) and give to me in the same format in json (like below)
    
-   the first <li> represents strentgts (5 max)
-   the second <li> represents weaknesses (5 max)
-   the third <li> represents suggestions for improvement (5 max)
+   the first <li> represents strengths
+   the second <li> represents weaknesses
+   the third <li> represents suggestions for improvement
+   all the lists have min 0 if they are any and will have 5 max
    
    notes:
    - ignore grammar errors
    
    EXAMPLE RESUT:
       {
+        "score": 10,
         "strengths": [
           "Candidate has relevant experience in software engineering and working on innovative projects",
           "Demonstrates a proactive approach to learning and seeking feedback",
