@@ -2,7 +2,7 @@
 export default function GeneralFeedback({ result }) {
   const { strengths, weaknesses, improvementSuggestions } = result;
   return (
-    <div className="max-w-6xl p-6 bg-white rounded-xl">
+    <div className=" p-6 bg-white rounded-xl">
       <h3 className="text-2xl font-semibold">General Feedback</h3>
       <div className="mt-4">
         <h3 className="text-lg font-medium	"> 💪 Strengths:</h3>

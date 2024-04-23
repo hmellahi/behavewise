@@ -37,11 +37,11 @@ export function AnswersFeedback({ answers }: { answers: Answer[] }) {
 
   const getAnswerScoreClass = (answer: Answer) => {
     // @ts-ignore
-    return scoreToColor[getAnswerScore(answer)]
-  }
+    return scoreToColor[getAnswerScore(answer)];
+  };
 
   return (
-    <div className="max-w-6xl p-8 bg-white rounded-xl">
+    <div className=" p-8 bg-white rounded-xl">
       <h3 className="text-2xl font-semibold mb-5">Answers Feedback</h3>
       <Accordion
         type="single"
@@ -66,9 +66,9 @@ export function AnswersFeedback({ answers }: { answers: Answer[] }) {
                   {answer.score}
                   <Badge
                     // @ts-ignore
-                    className={`h-6 shrink-0 ${
-                      getAnswerScoreClass(answer)
-                    } hover:${getAnswerScoreClass(answer)}
+                    className={`h-6 shrink-0 ${getAnswerScoreClass(
+                      answer
+                    )} hover:${getAnswerScoreClass(answer)}
                   `}
                   >
                     {getAnswerScore(answer)} / 10

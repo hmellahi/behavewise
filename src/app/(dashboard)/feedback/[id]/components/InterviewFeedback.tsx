@@ -5,6 +5,7 @@ import { fetchInterviewFeedback } from "@/server-actions/interview/interview.act
 import { useEffect, useRef, useState } from "react";
 import { AnswersFeedback } from "./AnswersFeedback";
 import GeneralFeedback from "./GeneralFeedback";
+import InterviewReplay from "./InterviewReplay";
 import InterviewStates from "./InterviewStates";
 export default function InterviewFeedback({
   initialInterviewData,
@@ -51,13 +52,14 @@ export default function InterviewFeedback({
   const { result } = interview;
 
   return (
-    <div className="flex gap-6">
-      <div className="flex flex-col gap-5">
+    <div className="flex gap-6 flex-wrap">
+      <div className="gap-7 flex flex-col">
+        <InterviewReplay />
+        <InterviewStates result={result} />
+      </div>
+      <div className="flex flex-col gap-5 w-[44rem] max-w-[53rem]">
         <GeneralFeedback result={result} />
         <AnswersFeedback answers={interview.answers} />
-      </div>
-      <div>
-      <InterviewStates result={result} />
       </div>
     </div>
   );
