@@ -57,12 +57,13 @@ export function AnswersFeedback({ answers }: { answers: Answer[] }) {
             <AccordionTrigger className="bg-[#ECEFF3] py-3 px-4 rounded-[1rem] w-full">
               <div className="flex justify-between w-full pr-5">
                 <div className="basis-[80%] text-left hover:underline truncated overflow-hidden min-w-0">
-                  {/* @ts-ignore */}
                   <p className="truncated w-[80%d] overflow-hidden">
+                    {/* @ts-ignore */}
                     {truncate(answer.question.caption)}
                   </p>
                 </div>
                 <div className="min-w-0 basis-[20%] text-right  shrink-0 overflow-hidden text-black">
+                  {/* @ts-ignore */}
                   {answer.score}
                   <Badge
                     // @ts-ignore

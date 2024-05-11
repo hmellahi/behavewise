@@ -1,4 +1,4 @@
-export default function InterviewStates({ result }) {
+export default function InterviewStates({ result }: { result: any }) {
   const { score } = result;
   return (
     <div className="w-[20rem] max-w-5xl p-6 bg-white rounded-xl">
@@ -7,7 +7,6 @@ export default function InterviewStates({ result }) {
         <span className="text-xl">Interview Score</span>
         <span className="text-green-600 font-bold text-2xl"> {score}% </span>
       </div>
-
     </div>
   );
 }
