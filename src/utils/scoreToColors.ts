@@ -10,10 +10,3 @@ export const scoreToColor = {
   9: "bg-green-700",
   10: "bg-green-700",
 };
-
-
-Hey Lisa,  I will make sure to complete it asap.
-
-Thank you too, You too have a good evening 😄
-
-Hamza
