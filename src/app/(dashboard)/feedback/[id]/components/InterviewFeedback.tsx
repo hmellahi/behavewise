@@ -53,11 +53,11 @@ export default function InterviewFeedback({
 
   return (
     <div className="flex gap-6 flex-wrap">
-      <div className="gap-7 flex flex-col">
+      {/* <div className="gap-7 flex flex-col">
         <InterviewReplay />
         <InterviewStates result={result} />
-      </div>
-      <div className="flex flex-col gap-5 w-[44rem] max-w-[53rem]">
+      </div> */}
+      <div className="flex flex-col gap-5 w-[44rem] w-[54rem] max-w-[53rem]">
         <GeneralFeedback result={result} />
         <AnswersFeedback answers={interview.answers} />
       </div>

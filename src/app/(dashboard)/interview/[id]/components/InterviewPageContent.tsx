@@ -12,8 +12,8 @@ import InterviewContainer from "./InterviewContainer";
 import LoadingState from "./LoadingState";
 import NoCameraAccess from "./NoCameraAccess";
 import VideoActions from "./VideoAction";
-import LinearTranslationAnimation from "./animations/LinearTranslationAnimation";
 import VideoNotStoredDisclaimer from "./VideoNotStoredDisclaimer";
+import LinearTranslationAnimation from "./animations/LinearTranslationAnimation";
 
 export default function InterviewPageContent({
   params,
@@ -25,6 +25,10 @@ export default function InterviewPageContent({
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const [capturing, setCapturing] = useState(false);
   const [recordedChunks, setRecordedChunks] = useState<Blob[]>([]);
+  // const [recordedChunksInterview, setRecordedChunksInterview] = useState<Blob[]>([]);
+  const recordedChunksInterview = useRef<Blob[]>([]);
+
+  // convertRecordingToVideo();
   const [seconds, setSeconds] = useState(QUESTION_TIME_LIMIT);
   const [videoEnded, setVideoEnded] = useState(false);
   const [recordingPermission, setRecordingPermission] = useState(true);
@@ -76,9 +80,11 @@ export default function InterviewPageContent({
 
   const handleDataAvailable = useCallback(
     ({ data }: BlobEvent) => {
-      if (data.size > 0) {
-        setRecordedChunks((prev) => prev.concat(data));
+      if (data.size <= 0) {
+        return;
       }
+      setRecordedChunks((prev) => prev.concat(data));
+      recordedChunksInterview.current.push(data);
     },
     [setRecordedChunks]
   );
@@ -138,7 +144,7 @@ export default function InterviewPageContent({
       return;
     }
     vidRef.current?.load();
-    
+
     handleStartCaptureClick();
   }, [currentQuestionIndex]);
 

@@ -1,7 +1,7 @@
 import * as interviewActions from "@/server-actions/interview/interview.actions";
-import { uuid } from "uuidv4";
+import { v4 } from "uuid";
 
 export const createAndRedirectToInterview = async () => {
-  const generatedInterviewId = uuid();
+  const generatedInterviewId = v4();
   window.location.href = `/interview/${generatedInterviewId} `;
 };
