@@ -57,7 +57,7 @@ export default function InterviewFeedback({
         <InterviewReplay />
         <InterviewStates result={result} />
       </div> */}
-      <div className="flex flex-col gap-5 w-[44rem] w-[54rem] max-w-[53rem]">
+      <div className="flex flex-col gap-5 max-w-[100rem]">
         <GeneralFeedback result={result} />
         <AnswersFeedback answers={interview.answers} />
       </div>

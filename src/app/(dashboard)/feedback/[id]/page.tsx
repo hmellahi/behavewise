@@ -1,9 +1,8 @@
+import PageWrapper from "@/components/ui/PageWrapper";
 import { fetchInterviewFeedback } from "@/server-actions/interview/interview.actions";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import InterviewFeedback from "./components/InterviewFeedback";
-import Headline from "@/components/ui/Headline";
-import PageWrapper from "@/components/ui/PageWrapper";
 
 export const metadata: Metadata = {
   title: "Mock Interview Feedback",

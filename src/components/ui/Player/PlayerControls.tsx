@@ -63,7 +63,7 @@ const PlayerControls: React.FC<ReactPlayerProps> = (props) => {
   };
 
   const handleFullscreen = () => {
-    screenfull.toggle(findDOMNode(wrapperRef.current) as Element);
+    // screenfull.toggle(findDOMNode(wrapperRef.current) as Element);
   };
 
   const handleSeek = (_event: Event, newValue: number | number[]) => {
