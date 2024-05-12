@@ -64,6 +64,7 @@
     "@tailwindcss/typography": "^0.5.9",
     "@types/formidable": "^2.0.5",
     "@types/styled-components": "^5.1.34",
+    "@types/uuid": "^9.0.8",
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.24",
     "prisma": "^5.12.1",
