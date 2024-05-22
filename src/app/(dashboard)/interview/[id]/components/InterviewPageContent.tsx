@@ -6,7 +6,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Webcam from "react-webcam";
 import { QUESTION_TIME_LIMIT } from "../constants/interview";
 import interviewQuestions from "../constants/interviewQuestions";
-import useEvaluateAnswer from "../hooks/evaluateAnswer";
+import useProcessAnswer from "../hooks/useProccessAnswer";
 import CountDown from "./CountDown";
 import InterviewContainer from "./InterviewContainer";
 import LoadingState from "./LoadingState";
@@ -25,8 +25,8 @@ export default function InterviewPageContent({
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const [capturing, setCapturing] = useState(false);
   const [recordedChunks, setRecordedChunks] = useState<Blob[]>([]);
-  // const [recordedChunksInterview, setRecordedChunksInterview] = useState<Blob[]>([]);
-  const recordedChunksInterview = useRef<Blob[]>([]);
+  // const [recordedAnswerChunks, setrecordedAnswerChunks] = useState<Blob[]>([]);
+  // const recordedAnswerChunks = useRef<Blob[]>([]);
 
   // convertRecordingToVideo();
   const [seconds, setSeconds] = useState(QUESTION_TIME_LIMIT);
@@ -36,9 +36,11 @@ export default function InterviewPageContent({
   const vidRef = useRef<HTMLVideoElement>(null);
   const [isSubmitting, setSubmitting] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const { evaluateAnswer, status } = useEvaluateAnswer();
+  const { processAnswer, status } = useProcessAnswer();
   const router = useRouter();
   const interviewId = params.id as string;
+  const currentQuestion = interviewQuestions[currentQuestionIndex];
+  const canStopRecording = seconds < QUESTION_TIME_LIMIT - 1;
   // Once the recording starts
   // -> StartRecording
   // -> display the stop recording button
@@ -84,7 +86,7 @@ export default function InterviewPageContent({
         return;
       }
       setRecordedChunks((prev) => prev.concat(data));
-      recordedChunksInterview.current.push(data);
+      // recordedAnswerChunks.current.push(data);
     },
     [setRecordedChunks]
   );
@@ -121,10 +123,11 @@ export default function InterviewPageContent({
     setSubmitting(true);
 
     try {
-      await evaluateAnswer({
+      await processAnswer({
         recordedChunks,
         question: currentQuestion,
         interviewId,
+        duration: QUESTION_TIME_LIMIT - seconds,
       });
     } catch (e) {
       console.log(e);
@@ -165,9 +168,6 @@ export default function InterviewPageContent({
       setCameraLoaded(true);
     }, 1000);
   };
-
-  const currentQuestion = interviewQuestions[currentQuestionIndex];
-  const canStopRecording = seconds < QUESTION_TIME_LIMIT - 1;
 
   return (
     <AnimatePresence>

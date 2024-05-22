@@ -50,4 +50,5 @@ model Answer {
   // Relation to Question table (optional)
   // question    Question?  @relation(fields: [questionId], references: [id]) // TODO 
   questionId  String
+  replayRecording Json?
 }

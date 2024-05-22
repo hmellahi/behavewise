@@ -1,10 +1,11 @@
-import answerService from "@/server-actions/interview/services/answerService";
+
 import { evaluateInterview } from "@/server-actions/interview/services/interviewService";
 import evaluateAnswer from "@/server-actions/interview/utils/evaluateAnswer";
 import { prisma } from "@/lib/prisma";
 
 import questionService from "@/server-actions/interview/services/questionService";
 import { NextApiRequest, NextApiResponse } from "next";
+import answerService from "@/server-actions/interview/services/answerService";
 // IMPORTANT! Set the runtime to edge
 // export const runtime = "edge";
 

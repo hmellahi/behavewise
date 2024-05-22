@@ -1,7 +1,4 @@
-import { evaluateInterview } from "@/server-actions/interview/services/interviewService";
-import evaluateAnswer from "@/server-actions/interview/utils/evaluateAnswer";
-import { generateEvalPrompt } from "@/server-actions/interview/utils/generateEvalPrompt";
-
+import { getAnswerReplayUrl } from "@/server-actions/interview/interview.actions";
 import { NextApiRequest, NextApiResponse } from "next";
 
 // IMPORTANT! Set the runtime to edge
@@ -13,9 +10,12 @@ export default async function handler(
 ) {
   try {
     // get id param
-    const { query: { id } } = request;
+    const {
+      query: { id },
+    } = request;
 
-    let result = await evaluateInterview(id as string);
+    let result = await getAnswerReplayUrl({});
+
     res.status(200).json({
       result,
     });

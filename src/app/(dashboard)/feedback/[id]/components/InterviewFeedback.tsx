@@ -5,8 +5,8 @@ import { fetchInterviewFeedback } from "@/server-actions/interview/interview.act
 import { useEffect, useRef, useState } from "react";
 import { AnswersFeedback } from "./AnswersFeedback";
 import GeneralFeedback from "./GeneralFeedback";
-import InterviewReplay from "./InterviewReplay";
 import InterviewStates from "./InterviewStates";
+import InterviewReplay from "./InterviewReplay";
 export default function InterviewFeedback({
   initialInterviewData,
 }: {
@@ -50,13 +50,18 @@ export default function InterviewFeedback({
   }
 
   const { result } = interview;
+  const link = "http://localhost:3002/stream/file.webm";
 
   return (
     <div className="flex gap-6 flex-wrap">
-      {/* <div className="gap-7 flex flex-col">
-        <InterviewReplay />
+      <div className="gap-7 flex flex-col">
+        {/* <InterviewReplay answerReplayUrl={link} /> */}
+        <video id="video" controls="true">
+          <source src={link} type='video/webm; codecs="vp8.0, vorbis"' />
+        </video>
+
         <InterviewStates result={result} />
-      </div> */}
+      </div>
       <div className="flex flex-col gap-5 max-w-[100rem]">
         <GeneralFeedback result={result} />
         <AnswersFeedback answers={interview.answers} />

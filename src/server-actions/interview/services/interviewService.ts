@@ -3,10 +3,10 @@
 import { prisma } from "@/lib/prisma";
 import { CreateAnswerDto } from "@/types/interview";
 import { OpenAIStream, OpenAIStreamPayload } from "@/utils/OpenAIStream";
+import { revalidatePath } from "next/cache";
 import { generateEvalPrompt } from "../utils/generateEvalPrompt";
 import answerService from "./answerService";
 import questionService from "./questionService";
-import { revalidatePath } from "next/cache";
 
 export const evaluateInterview = async (interviewId: string) => {
   const evaluationPrompt = await generateEvalPrompt(interviewId);
@@ -56,18 +56,20 @@ export const evaluateInterview = async (interviewId: string) => {
 
 async function saveAnswer(answer: CreateAnswerDto) {
   // save it in db
-  await answerService.save(answer);
+  const savedAnswer = await answerService.save(answer);
 
   // check if interview answers count == interviewQuestions count
   // if yes then mark the interview as completed
   // make the interviewId int..
-  const { interviewId } = answer;
-  const answersCount = await answerService.countAnswers(interviewId);
-  const questionsCount = await questionService.countQuestions(interviewId);
-  if (answersCount === questionsCount) {
-    console.log({ answersCount, questionsCount });
-    await evaluateInterview(interviewId);
-  }
+  async () => {
+    const { interviewId } = answer;
+    const answersCount = await answerService.countAnswers(interviewId);
+    const questionsCount = await questionService.countQuestions(interviewId);
+    if (answersCount === questionsCount) {
+      await evaluateInterview(interviewId);
+    }
+  };
+  return savedAnswer
 }
 
 const interviewService = {

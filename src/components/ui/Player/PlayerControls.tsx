@@ -119,7 +119,7 @@ const PlayerControls: React.FC<ReactPlayerProps> = (props) => {
         <Typography variant="body2" color="white">
           {format(new Date(state.progress.playedSeconds * 1000), 'mm:ss')}
           {' / '}
-          {format(new Date(state.duration * 1000), 'mm:ss')}
+          {/* {format(new Date(state.duration * 1000), 'mm:ss')} */}
         </Typography>
       </Stack>
     );

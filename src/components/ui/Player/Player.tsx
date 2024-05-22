@@ -87,7 +87,6 @@ const Player: React.FC<ReactPlayerProps> = (props) => {
     <StyledPlayer state={state} ref={wrapperRef} className="">
       <ReactPlayer
         ref={playerRef}
-        url={url}
         width="100%"
         height="100%"
         light={light}
@@ -111,6 +110,10 @@ const Player: React.FC<ReactPlayerProps> = (props) => {
         onDuration={handleDuration}
         onProgress={handleProgress}
         onClickPreview={handlePreview}
+        source={{
+          type: "video/webm",
+          src: url,
+        }}
       />
       <PlayerOverlay state={state} />
       {!state.controls && !state.light && (
