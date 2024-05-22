@@ -1,20 +1,41 @@
 import answerService from "@/server-actions/interview/services/answerService";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import interviewQuestions from "../constants/interviewQuestions";
 import { interviewQuestion } from "../types/Interview";
 import saveRecording from "../utils/saveRecording";
 import useEvaluateAnswer from "./useEvaluateAnswer";
 
-export default function useProcessAnswer() {
+export default function useProcessAnswer({
+  params,
+}: {
+  params: { id: string };
+}) {
   const { evaluateAnswer, status } = useEvaluateAnswer();
+
+  const router = useRouter();
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const interviewId = params.id as string;
+  const processedAnswers = useRef(0);
+
+  useEffect(() => {
+    const isLastQuestion =
+      currentQuestionIndex + 1 === interviewQuestions.length;
+
+    if (processedAnswers.current === interviewQuestions.length) {
+      if (isLastQuestion) {
+        router.push("/feedback/" + interviewId);
+      }
+    }
+  }, [processedAnswers]);
 
   const processAnswer = async ({
     recordedChunks,
     question,
-    interviewId,
     duration,
   }: {
     recordedChunks: Blob[];
     question: interviewQuestion;
-    interviewId: string;
     duration: number;
   }) => {
     const questionId = question.id;
@@ -40,8 +61,6 @@ export default function useProcessAnswer() {
     const { filePath } = savedRecording;
     const { evaluatedAnswer } = evaluateAnswerResult;
 
-    console.log({ evaluateAnswerResult, savedRecording})
-
     const updated = await answerService.updateAnswer({
       id: evaluatedAnswer.id,
       replayRecording: {
@@ -50,11 +69,14 @@ export default function useProcessAnswer() {
         server: "cloudflare",
       },
     });
-    console.log({ updated });
+
+    processedAnswers.current++;
   };
 
   return {
     processAnswer,
-    status
+    status,
+    currentQuestionIndex,
+    setCurrentQuestionIndex
   };
 }

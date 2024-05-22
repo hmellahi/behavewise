@@ -1,7 +1,6 @@
 "use client";
 import Spinner from "@/components/svgs/Spinner";
 import { AnimatePresence } from "framer-motion";
-import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Webcam from "react-webcam";
 import { QUESTION_TIME_LIMIT } from "../constants/interview";
@@ -25,22 +24,21 @@ export default function InterviewPageContent({
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const [capturing, setCapturing] = useState(false);
   const [recordedChunks, setRecordedChunks] = useState<Blob[]>([]);
-  // const [recordedAnswerChunks, setrecordedAnswerChunks] = useState<Blob[]>([]);
-  // const recordedAnswerChunks = useRef<Blob[]>([]);
-
-  // convertRecordingToVideo();
   const [seconds, setSeconds] = useState(QUESTION_TIME_LIMIT);
   const [videoEnded, setVideoEnded] = useState(false);
   const [recordingPermission, setRecordingPermission] = useState(true);
   const [cameraLoaded, setCameraLoaded] = useState(false);
   const vidRef = useRef<HTMLVideoElement>(null);
   const [isSubmitting, setSubmitting] = useState(false);
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const { processAnswer, status } = useProcessAnswer();
-  const router = useRouter();
-  const interviewId = params.id as string;
+  const {
+    processAnswer,
+    status,
+    currentQuestionIndex,
+    setCurrentQuestionIndex,
+  } = useProcessAnswer({ params });
   const currentQuestion = interviewQuestions[currentQuestionIndex];
   const canStopRecording = seconds < QUESTION_TIME_LIMIT - 1;
+
   // Once the recording starts
   // -> StartRecording
   // -> display the stop recording button
@@ -117,8 +115,6 @@ export default function InterviewPageContent({
 
   const SubmitAnswer = async () => {
     // move to next question
-    const isLastQuestion =
-      currentQuestionIndex + 1 === interviewQuestions.length;
 
     setSubmitting(true);
 
@@ -126,15 +122,10 @@ export default function InterviewPageContent({
       await processAnswer({
         recordedChunks,
         question: currentQuestion,
-        interviewId,
         duration: QUESTION_TIME_LIMIT - seconds,
       });
     } catch (e) {
       console.log(e);
-    }
-
-    if (isLastQuestion) {
-      return router.push("/feedback/" + interviewId);
     }
 
     setSubmitting(false);
