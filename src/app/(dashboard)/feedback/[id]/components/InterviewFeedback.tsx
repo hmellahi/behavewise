@@ -38,7 +38,7 @@ export default function InterviewFeedback({
         {/* <CatLoader width={400} height={400} /> */}
         <Spinner className="animate-spin h-10 w-10 !text-primary" />
         <h2 className="text-2xl font-semibold">
-          BehaveWise is generating interview a report
+         Generating your interview feedback (estimated time: 30 seconds)
         </h2>
         {/* TODO */}
         {/* <p> 
@@ -57,7 +57,7 @@ export default function InterviewFeedback({
         <InterviewReplay />
         <InterviewStates result={result} />
       </div> */}
-      <div className="flex flex-col gap-5 max-w-[100rem]">
+      <div className="flex flex-col gap-5 w-[60rem]">
         <GeneralFeedback result={result} />
         <AnswersFeedback answers={interview.answers} />
       </div>

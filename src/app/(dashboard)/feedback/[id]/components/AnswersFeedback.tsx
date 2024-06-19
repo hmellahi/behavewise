@@ -41,7 +41,7 @@ export function AnswersFeedback({ answers }: { answers: Answer[] }) {
   };
 
   return (
-    <div className=" p-8 bg-white rounded-xl">
+    <div className="p-8 bg-white rounded-xl">
       <h3 className="text-2xl font-semibold mb-5">Answers Feedback</h3>
       <Accordion
         type="single"
@@ -56,13 +56,13 @@ export function AnswersFeedback({ answers }: { answers: Answer[] }) {
           >
             <AccordionTrigger className="bg-[#ECEFF3] py-3 px-4 rounded-[1rem] w-full">
               <div className="flex justify-between w-full pr-5 items-center">
-                <div className="basis-[80%] text-left hover:underline truncated overflow-hidden min-w-0">
-                  <p className="truncated w-[80%d] overflow-hidden">
+                <div className="basis-[90%] text-left hover:underline truncated overflow-hidden min-w-0">
+                  <p className="truncated overflow-hidden">
                     {/* @ts-ignore */}
-                    {truncate(answer.question.caption)}
+                    {answer.question.caption}
                   </p>
                 </div>
-                <div className="min-w-0 basis-[20%] text-right  shrink-0 overflow-hidden text-black">
+                <div className="min-w-0 basis-[10%] text-right  shrink-0 overflow-hidden text-black">
                   {/* @ts-ignore */}
                   {answer.score}
                   <Badge
