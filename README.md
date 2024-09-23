@@ -61,3 +61,6 @@ BehaveWise is an interview preparation tool that provides AI feedback on your mo
 Behavewise uses FFmpeg to transcode the raw video into MP3. Chrome, Safari, and Firefox all record with different codecs, and FFmpeg is great for standardizing them.
 
 We then send the audio directly to be transcribed by OpenAI's Whisper endpoint, and then stream feedback from the edge using OpenAI's gpt-3.5-turbo.
+
+## Credits
+This project was based on Tyler Meyer template ([@tmeyer_me](https://twitter.com/tmeyer_me))
